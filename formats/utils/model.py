@@ -68,11 +68,18 @@ def movies_from_json(filepath):
                                 # clip.audio = 11labs_tts(clip.script)
                                 pass
                             elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
-                                # clip.video = did_character(clip.script, clip.host_img)
+                                # clip.video = did_character(clip.script, clip.host_img) (maybe host_img could also end in .sd or .mj and it would make you a host)
                                 pass
                             elif clip.asset.endswith(('sora')): # asset-name.sora -> go make a .mp4 from sora using a prompt
                                 # clip.video = sora_clip(prompt)
                                 pass
+                            elif clip.asset.endswith(('sora')): # asset-name.sora -> go make a .mp4 from sora using a prompt
+                                # clip.video = sora_clip(prompt)
+                                pass
+                            elif clip.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
+                                #clip.video = midjourney(prompt)
+                                pass
+
                         else:
                             clip.video = create_caption(
                                 text=clip.asset,
