@@ -1,36 +1,148 @@
 [
     {
         "title": "double",
-        "arrangement": "stack",
-        "final_size": [1080, 1920],
-        "use_audio": [1],
         "publish_destinations": ["instagram"],
-        "clips": [
+        "final_size": [1080, 1920],
+        "scenes": [
             {
-                "asset": "./assets/background/office.jpg",
-                "size": [1080, 1920]
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/music/elevator.mp3"
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"],
+                        "size": [500, 1920],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "./assets/videos/chippi.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["right", "bottom"],
+                        "size": [500, 1920],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "Me and bro vibing to the slack hold music",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
             },
             {
-                "asset": "./assets/music/elevator.mp3"
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/music/monkey.mp3"
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"],
+                        "size": [1080, 1082],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "Back to work!",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "another one",
+        "publish_destinations": ["instagram"],
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/music/chippi.mp3"
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["right", "bottom"],
+                        "size": [500, 1920],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "./assets/videos/chippi.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"],
+                        "size": [500, 1920],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "Me and bro vibing to the slack hold music",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
             },
             {
-                "asset": "./assets/videos/toothless.mp4",
-                "has_greenscreen": true,
-                "anchor": ["left", "bottom"],
-                "size": [500, 1920],
-                "location": [0, 200]
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/cat-crunch.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"],
+                        "size": [1080, 1082],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "Lunch time!",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
             },
             {
-                "asset": "./assets/videos/chippi.mp4",
-                "has_greenscreen": true,
-                "anchor": ["right", "bottom"],
-                "size": [500, 1920],
-                "location": [0, 200]
-            },
-            {
-                "asset": "Me and bro vibing to the slack hold music",
-                "anchor": ["center", "top"],
-                "location": [10, 275]
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/traffic.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"],
+                        "size": [1080, 1082],
+                        "location": [0, 200]
+                    },
+                    {
+                        "asset": "stuck in traffic!",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
             }
         ]
     }

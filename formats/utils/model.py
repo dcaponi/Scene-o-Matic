@@ -19,14 +19,21 @@ class Clip:
     location: tuple[int, int] = field(default_factory = lambda:(0, 0))
     anchor: tuple[str, str] = field(default_factory = lambda:("top", "left"))
 
+
+@dataclass
+class Scene:
+    clips: List[Clip]
+    temp_file: str = ""
+    arrangement: str = "vertical"
+    audio: AudioFileClip = None
+    use_audio: List[int] = field(default_factory=lambda: [0])
+
+
 @dataclass
 class Movie:
     title: str
-    clips: List[Clip]
-    audio: AudioFileClip = None
-    arrangement: str = "vertical"
+    scenes: List[Scene]
     publish_destinations: List[str] = field(default_factory=lambda: [])
-    use_audio: List[int] = field(default_factory=lambda: [0])
     final_size: tuple[int, int] = field(default_factory=lambda: (1080, 1920))
     duration: int = 0
 
@@ -37,39 +44,44 @@ def movies_from_json(filepath):
             movies = []
 
             for movie_data in data:
-                clips_data = movie_data.get("clips", [])
-                clips = []
+                scenes_data = movie_data.get("scenes", [])
+                scenes = []
 
-                for clip_data in clips_data:
-                    clip = Clip(**clip_data)
-                    clips.append(clip)
+                for scene_data in scenes_data:
+                    clips_data = scene_data.get("clips", [])
+                    clips = []
+
+                    for clip_data in clips_data:
+                        clip = Clip(**clip_data)
+                        if os.path.exists(clip.asset):
+                            if clip.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
+                                clip.video = VideoFileClip(clip.asset).set_duration(0).resize(clip.size)
+                            elif clip.asset.endswith(('mp3', 'wav', 'ogg')):
+                                clip.audio = AudioFileClip(clip.asset)
+                            elif clip.asset.endswith(('mp4', 'avi', 'mkv')):
+                                clip.video = VideoFileClip(clip.asset).resize(clip.size)
+                                clip.audio = clip.video.audio
+                        else:
+                            clip.video = create_caption(
+                                text=clip.asset,
+                                pos=clip.anchor,
+                                font="Courier-New-Bold",
+                                fontsize=70,
+                                color="white",
+                                has_bg=True,
+                            )
+                        clips.append(clip)
+
+                    scene = Scene(**scene_data)
+                    scene.clips = clips
+                    scene.audio = CompositeAudioClip([scene.clips[x].audio for x in scene.use_audio])
+                    scenes.append(scene)
 
                 movie = Movie(**movie_data)
-                movie.clips = clips
-
-                for clip in movie.clips:
-                    if os.path.exists(clip.asset):
-                        if clip.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
-                            clip.video = VideoFileClip(clip.asset).set_duration(0).resize(clip.size)
-                        elif clip.asset.endswith(('mp3', 'wav', 'ogg')):
-                            clip.audio = AudioFileClip(clip.asset)
-                        elif clip.asset.endswith(('mp4', 'avi', 'mkv')):
-                            clip.video = VideoFileClip(clip.asset).resize(clip.size)
-                            clip.audio = clip.video.audio
-                    else:
-                        clip.video = create_caption(
-                            text=clip.asset,
-                            pos=clip.anchor,
-                            font="Courier-New-Bold",
-                            fontsize=70,
-                            color="white",
-                            has_bg=True,
-                        )
-                
-                audios = [movie.clips[x].audio for x in movie.use_audio]
-                movie.audio = CompositeAudioClip(audios)
+                movie.scenes = scenes
                 movies.append(movie)
             return movies
+        
     except FileNotFoundError:
         print(f"Error: File {filepath} not found")
         sys.exit(1)

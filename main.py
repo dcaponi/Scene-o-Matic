@@ -1,12 +1,14 @@
 import os
 import threading
 from typing import List
+from natsort import natsorted
 # from uploaders.upload import Uploader
 from moviepy.editor import *
+import moviepy.config as mpconfig
 from formats.narrated_compilation import make_movie
 
 from formats.utils.edit_utils import remove_bottom_third, remove_greenscreen, stack
-from formats.utils.model import movies_from_json
+from formats.utils.model import Clip, movies_from_json
 
 scream_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-scream.mp4")).resize((1080, 1920))
 stare_clip = remove_greenscreen(VideoFileClip("./assets/videos/stare.mp4")).resize((1080, 1440))
@@ -34,27 +36,6 @@ PRODUCTS_DIR = "output"
 #         subfolder_path = os.path.join(dirpath, dirname)
 #         to_publish.append((dirname, f"{subfolder_path}/final.mp4"))
 
-# for tp in to_publish:
-#     yt_uploader.upload_video(
-#         tp[1],
-#         tp[0],
-#         "cursed coding advice",
-#         "22",
-#         ["agile", "scrum", "coding", "faang", "softwareengineering"],
-#     )
-# yt_uploader.upload_video(
-#     "./output/agile/final.mp4",
-#     "agile",
-#     "absurd agile advice",
-#     "22",
-#     ["agile", "scrum", "coding", "faang", "softwareengineering"],
-# )
-
-# ig_uploader = Uploader('instagram')
-# ig_uploader.upload_video(
-#     "./output/agile/final.mp4"
-# )
-
 # topics = [
 #     (
 #         "interviews",
@@ -70,40 +51,76 @@ PRODUCTS_DIR = "output"
 
 # [make_movie(t, bg, PRODUCTS_DIR, title) for title, t, bg in topics]
 
-def write(clip, out, threads=8):
-    clip.write_videofile(out, threads=threads)
+def write(clip: VideoFileClip, out, temp_audio=None, threads=8):
+    # Need to set a temp_audiofile or else it will dump all the audios to the directory from where this is running.
+    # Thats bad because we do an incremental write for each scene (0.mp3, 1.mp3) which means overlap
+    # Overlap is bad because moviepy wont make another temp audio file if the 1.mp3 from a previous movie exists so you get
+    # weird audio bugs if you don't do this.
+    clip.write_videofile(out, threads=threads, temp_audiofile=temp_audio)
+
+def make_stacked_scene(clips: List[Clip]):
+    built_scene = None
+    for clip in clips:
+        if clip.video:
+            if clip.has_greenscreen:
+                clip.video = remove_greenscreen(clip.video)
+            if built_scene == None:
+                built_scene = clip.video
+            else:
+                built_scene = stack(clip.video, built_scene, clip.location, clip.anchor, False)
+    return built_scene
+
 
 if __name__ == "__main__":
     # main()
-    threads = []
+    scene_threads = []
+    movie_threads = []
     existing_titles = [title.split(".")[0] for title in os.listdir(f"./{PRODUCTS_DIR}")]
 
     movies = movies_from_json("./manifest.json")
     for movie in movies:
         if movie.title not in existing_titles:
-            if movie.arrangement == "stack":
-                final_clip = None
-                for clip in movie.clips:
-                    if clip.video:
-                        if clip.has_greenscreen:
-                            clip.video = remove_greenscreen(clip.video)
-                        if final_clip == None:
-                            final_clip = clip.video
-                        else:
-                            final_clip = stack(clip.video, final_clip, clip.location, clip.anchor, False)
+            outdir = f"./{PRODUCTS_DIR}/{movie.title}"
+            os.mkdir(outdir)
 
-                duration = min([c.video.duration for c in movie.clips if c.video is not None and c.video.duration > 0])
+            for i, scene in enumerate(movie.scenes):
+                scene.temp_file = f"{outdir}/{i}.mp4"
 
-                final_clip = final_clip.resize(movie.final_size).set_audio(movie.audio).set_duration(duration)
+                if scene.arrangement == "stack":
+                    built_scene = make_stacked_scene(scene.clips)
+                if scene.arrangement == "vertical":
+                    pass
+                if scene.arrangement == "horizontal":
+                    pass
+                if scene.arrangement == "pip":
+                    pass
+                if scene.arrangement == "montage":
+                    pass
 
-                threads.append(
-                    threading.Thread(target=write, args=(final_clip, f"./{PRODUCTS_DIR}/{movie.title}.mp4", 8, ))
+                duration = min([c.video.duration for c in scene.clips if c.video is not None and c.video.duration > 0])
+                duration = min([duration, scene.audio.duration])
+
+                built_scene = built_scene.resize(movie.final_size).set_audio(scene.audio).set_duration(duration)
+                scene_threads.append(
+                    threading.Thread(target=write, args=(built_scene, f"{scene.temp_file}", f"{outdir}/{i}.mp3", 8, ))
                 )
 
-    # Starting each thread
-    for thread in threads:
+    for thread in scene_threads:
         thread.start()
 
-    # Optionally, wait for all threads to complete
-    for thread in threads:
+    for thread in scene_threads:
+        thread.join()
+
+    for d in os.listdir(f"./{PRODUCTS_DIR}"):
+        final_movie = concatenate_videoclips([VideoFileClip(f"./{PRODUCTS_DIR}/{d}/{built_scene}") for built_scene in natsorted(os.listdir(f"./{PRODUCTS_DIR}/{d}"))])
+        movie_threads.append(
+            threading.Thread(target=write, args=(final_movie, f"./{PRODUCTS_DIR}/{d}/{d}.mp4", None, 8, ))
+        )
+
+        [os.remove(f"./{PRODUCTS_DIR}/{d}/{built_scene}") for built_scene in os.listdir(f"./{PRODUCTS_DIR}/{d}")]
+
+    for thread in movie_threads:
+        thread.start()
+
+    for thread in movie_threads:
         thread.join()
