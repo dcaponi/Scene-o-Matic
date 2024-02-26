@@ -1,40 +1,14 @@
 import os
 import threading
-from typing import List
 from natsort import natsorted
-# from uploaders.upload import Uploader
 from moviepy.editor import *
-import moviepy.config as mpconfig
-from formats.narrated_compilation import make_movie
 
-from formats.utils.edit_utils import remove_bottom_third, remove_greenscreen, stack
-from formats.utils.model import Clip, movies_from_json
-
-scream_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-scream.mp4")).resize((1080, 1920))
-stare_clip = remove_greenscreen(VideoFileClip("./assets/videos/stare.mp4")).resize((1080, 1440))
-shuffle_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-truffleshuffle.mp4")).resize((1080, 1440))
-huh_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-huh.mp4")).resize((1080, 1920))
-chippi_clip = remove_greenscreen(VideoFileClip("./assets/videos/chippi.mp4")).resize((1080, 1440))
-
-wtf_clip = remove_greenscreen(VideoFileClip("./assets/videos/wtfitpos.mp4")).resize((1080, 1200))
-zone_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-zone.mp4")).resize((1080, 1440))
-snore_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-snore.mp4")).resize((1080, 1440))
-# cena_clip = remove_greenscreen(VideoFileClip("./assets/videos/cupid.mp4"))
-concern_clip = remove_greenscreen(VideoFileClip("./assets/videos/dog-concern.mp4")).resize((1080, 1440))
-toothless_clip = remove_bottom_third(remove_greenscreen(VideoFileClip("./assets/videos/toothless.mp4")).resize((1080, 1920)))
-crunch_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-crunch.mp4")).resize((1080, 1440))
-driving_clip = remove_greenscreen(VideoFileClip("./assets/videos/cat-driving.mp4")).resize((1080, 1440))
+from formats.utils.model import movies_from_json
+from formats.utils.scene_builder import make_stacked_scene
 
 PRODUCTS_DIR = "output"
 
-# yt_uploader = Uploader('youtube')
-
 # def main():
-# to_publish = []
-# for dirpath, dirnames, filenames in os.walk("./output"):
-#     for dirname in dirnames:
-#         subfolder_path = os.path.join(dirpath, dirname)
-#         to_publish.append((dirname, f"{subfolder_path}/final.mp4"))
 
 # topics = [
 #     (
@@ -57,18 +31,6 @@ def write(clip: VideoFileClip, out, temp_audio=None, threads=8):
     # Overlap is bad because moviepy wont make another temp audio file if the 1.mp3 from a previous movie exists so you get
     # weird audio bugs if you don't do this.
     clip.write_videofile(out, threads=threads, temp_audiofile=temp_audio)
-
-def make_stacked_scene(clips: List[Clip]):
-    built_scene = None
-    for clip in clips:
-        if clip.video:
-            if clip.has_greenscreen:
-                clip.video = remove_greenscreen(clip.video)
-            if built_scene == None:
-                built_scene = clip.video
-            else:
-                built_scene = stack(clip.video, built_scene, clip.location, clip.anchor, False)
-    return built_scene
 
 
 if __name__ == "__main__":

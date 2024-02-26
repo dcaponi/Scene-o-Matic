@@ -13,6 +13,9 @@ class Clip:
     video: VideoFileClip = None
     audio: AudioFileClip = None
     has_greenscreen: bool = False
+    prompt: str = None
+    script: str = None
+    host_img: str = None
     type: Optional[str] = None
     fade_duration: int = 0
     size: Optional[tuple[int, int]] = None
@@ -61,6 +64,15 @@ def movies_from_json(filepath):
                             elif clip.asset.endswith(('mp4', 'avi', 'mkv')):
                                 clip.video = VideoFileClip(clip.asset).resize(clip.size)
                                 clip.audio = clip.video.audio
+                            elif clip.asset.endswith(('11l', 'tt', 'whisper')): # asset-name.tts -> go make a .mp3 using a tts from asset script
+                                # clip.audio = 11labs_tts(clip.script)
+                                pass
+                            elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
+                                # clip.video = did_character(clip.script, clip.host_img)
+                                pass
+                            elif clip.asset.endswith(('sora')): # asset-name.sora -> go make a .mp4 from sora using a prompt
+                                # clip.video = sora_clip(prompt)
+                                pass
                         else:
                             clip.video = create_caption(
                                 text=clip.asset,
@@ -81,7 +93,7 @@ def movies_from_json(filepath):
                 movie.scenes = scenes
                 movies.append(movie)
             return movies
-        
+
     except FileNotFoundError:
         print(f"Error: File {filepath} not found")
         sys.exit(1)
