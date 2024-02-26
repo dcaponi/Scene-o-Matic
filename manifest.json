@@ -1,0 +1,37 @@
+[
+    {
+        "title": "double",
+        "arrangement": "stack",
+        "final_size": [1080, 1920],
+        "use_audio": [1],
+        "publish_destinations": ["instagram"],
+        "clips": [
+            {
+                "asset": "./assets/background/office.jpg",
+                "size": [1080, 1920]
+            },
+            {
+                "asset": "./assets/music/elevator.mp3"
+            },
+            {
+                "asset": "./assets/videos/toothless.mp4",
+                "has_greenscreen": true,
+                "anchor": ["left", "bottom"],
+                "size": [500, 1920],
+                "location": [0, 200]
+            },
+            {
+                "asset": "./assets/videos/chippi.mp4",
+                "has_greenscreen": true,
+                "anchor": ["right", "bottom"],
+                "size": [500, 1920],
+                "location": [0, 200]
+            },
+            {
+                "asset": "Me and bro vibing to the slack hold music",
+                "anchor": ["center", "top"],
+                "location": [10, 275]
+            }
+        ]
+    }
+]
