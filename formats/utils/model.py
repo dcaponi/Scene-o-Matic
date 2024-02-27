@@ -17,7 +17,7 @@ class Clip:
     script: str = None
     host_img: str = None
     type: Optional[str] = None
-    fade_duration: int = 0
+    duration: int = None
     size: Optional[tuple[int, int]] = None
     location: tuple[int, int] = field(default_factory = lambda:(0, 0))
     anchor: tuple[str, str] = field(default_factory = lambda:("top", "left"))

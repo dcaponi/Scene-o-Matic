@@ -32,6 +32,7 @@ To get back to your home package context
       2. video: `.sora` for openai sora or `.did` for d-id talking head type videos
       3. image: `.sd` for stable diffusion `.dall-e` for dall-e and `.mj` for midjourney
    3. In vertical/horizontal scenes the clips are arranged in order from top down or left to right
+
 ## Caveats and Limitations
 1. Theres no background music setting
 2. Theres no scene transition, its just a jump cut

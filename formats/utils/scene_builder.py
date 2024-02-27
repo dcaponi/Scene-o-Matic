@@ -3,7 +3,7 @@ from formats.utils.edit_utils import remove_greenscreen, stack
 from formats.utils.model import Clip
 
 
-def make_stacked_scene(clips: List[Clip]):
+def make_stacked_scene(clips: list[Clip]):
     built_scene = None
     for clip in clips:
         if clip.video:

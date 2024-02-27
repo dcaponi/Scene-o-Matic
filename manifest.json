@@ -1,41 +1,9 @@
 [
     {
-        "title": "double",
+        "title": "huh",
         "publish_destinations": ["instagram"],
         "final_size": [1080, 1920],
         "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "./assets/music/elevator.mp3"
-                    },
-                    {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "has_greenscreen": true,
-                        "anchor": ["left", "bottom"],
-                        "size": [500, 1920],
-                        "location": [0, 200]
-                    },
-                    {
-                        "asset": "./assets/videos/chippi.mp4",
-                        "has_greenscreen": true,
-                        "anchor": ["right", "bottom"],
-                        "size": [500, 1920],
-                        "location": [0, 200]
-                    },
-                    {
-                        "asset": "Me and bro vibing to the slack hold music",
-                        "anchor": ["center", "top"],
-                        "location": [10, 275]
-                    }
-                ]
-            },
             {
                 "arrangement": "stack",
                 "use_audio": [1],
@@ -45,17 +13,13 @@
                         "size": [1080, 1920]
                     },
                     {
-                        "asset": "./assets/music/monkey.mp3"
-                    },
-                    {
-                        "asset": "./assets/videos/stare.mp4",
+                        "asset": "./assets/videos/cat-huh.mp4",
                         "has_greenscreen": true,
-                        "anchor": ["center", "bottom"],
-                        "size": [1080, 1082],
-                        "location": [0, 200]
+                        "anchor": ["left", "bottom"],
+                        "size": [1080, 1920]
                     },
                     {
-                        "asset": "Back to work!",
+                        "asset": "Reading functional programmer code for the first time",
                         "anchor": ["center", "top"],
                         "location": [10, 275]
                     }
@@ -64,7 +28,63 @@
         ]
     },
     {
-        "title": "another one",
+        "title": "pesci",
+        "publish_destinations": ["instagram"],
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/wtfitpos.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["right", "bottom"],
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "Reading a 'self-documenting' 'clean' codebase",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "stare",
+        "publish_destinations": ["instagram"],
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/networking-event.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"],
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "When the CEO tries to make small-talk but I only speak SmallTalk",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "swag",
         "publish_destinations": ["instagram"],
         "final_size": [1080, 1920],
         "scenes": [
@@ -77,24 +97,13 @@
                         "size": [1080, 1920]
                     },
                     {
-                        "asset": "./assets/music/chippi.mp3"
-                    },
-                    {
                         "asset": "./assets/videos/toothless.mp4",
                         "has_greenscreen": true,
                         "anchor": ["right", "bottom"],
-                        "size": [500, 1920],
-                        "location": [0, 200]
+                        "size": [1080, 1920]
                     },
                     {
-                        "asset": "./assets/videos/chippi.mp4",
-                        "has_greenscreen": true,
-                        "anchor": ["left", "bottom"],
-                        "size": [500, 1920],
-                        "location": [0, 200]
-                    },
-                    {
-                        "asset": "Me and bro vibing to the slack hold music",
+                        "asset": "CEO: You're all getting a treat for record profits this quarter",
                         "anchor": ["center", "top"],
                         "location": [10, 275]
                     }
@@ -109,36 +118,97 @@
                         "size": [1080, 1920]
                     },
                     {
-                        "asset": "./assets/videos/cat-crunch.mp4",
+                        "asset": "./assets/videos/wtfitpos.mp4",
                         "has_greenscreen": true,
-                        "anchor": ["center", "bottom"],
-                        "size": [1080, 1082],
-                        "location": [0, 200]
+                        "anchor": ["right", "bottom"],
+                        "size": [1080, 1920]
                     },
                     {
-                        "asset": "Lunch time!",
+                        "asset": "It's just a branded stress ball",
                         "anchor": ["center", "top"],
                         "location": [10, 275]
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "title": "scream",
+        "publish_destinations": ["instagram"],
+        "final_size": [1080, 1920],
+        "scenes": [
             {
                 "arrangement": "stack",
                 "use_audio": [1],
                 "clips": [
                     {
-                        "asset": "./assets/background/traffic.jpg",
+                        "asset": "./assets/background/oldpc.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/cat-scream.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"],
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "We need to move you back to your old team since the only other dev quit",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "intern",
+        "publish_destinations": ["instagram"],
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/dog-concern.mp4",
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"],
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "Intern: ChatGPT said I needed to add -f to git push main to make the error go away",
+                        "anchor": ["center", "top"],
+                        "location": [10, 275]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "pm",
+        "publish_destinations": ["instagram"],
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
                         "size": [1080, 1920]
                     },
                     {
                         "asset": "./assets/videos/stare.mp4",
                         "has_greenscreen": true,
-                        "anchor": ["center", "bottom"],
-                        "size": [1080, 1082],
-                        "location": [0, 200]
+                        "anchor": ["left", "bottom"],
+                        "size": [1080, 1920]
                     },
                     {
-                        "asset": "stuck in traffic!",
+                        "asset": "Me when the PM 'forgot' to tell me a requirement and now I have to rewrite the project before tomorrow",
                         "anchor": ["center", "top"],
                         "location": [10, 275]
                     }
