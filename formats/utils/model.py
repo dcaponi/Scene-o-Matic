@@ -13,6 +13,7 @@ class Clip:
     video: VideoFileClip = None
     audio: AudioFileClip = None
     has_greenscreen: bool = False
+    has_background: bool = True
     prompt: str = None
     script: str = None
     host_img: str = None
@@ -58,7 +59,7 @@ def movies_from_json(filepath):
                         clip = Clip(**clip_data)
                         if os.path.exists(clip.asset):
                             if clip.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
-                                clip.video = VideoFileClip(clip.asset).set_duration(0).resize(clip.size)
+                                clip.video = VideoFileClip(clip.asset).set_duration(clip.duration).resize(clip.size)
                             elif clip.asset.endswith(('mp3', 'wav', 'ogg')):
                                 clip.audio = AudioFileClip(clip.asset)
                             elif clip.asset.endswith(('mp4', 'avi', 'mkv')):
@@ -70,24 +71,22 @@ def movies_from_json(filepath):
                             elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
                                 # clip.video = did_character(clip.script, clip.host_img) (maybe host_img could also end in .sd or .mj and it would make you a host)
                                 pass
-                            elif clip.asset.endswith(('sora')): # asset-name.sora -> go make a .mp4 from sora using a prompt
-                                # clip.video = sora_clip(prompt)
-                                pass
-                            elif clip.asset.endswith(('sora')): # asset-name.sora -> go make a .mp4 from sora using a prompt
+                            elif clip.asset.endswith(('sora', 'rand')): # asset-name.sora -> go make a .mp4 from sora using a prompt
                                 # clip.video = sora_clip(prompt)
                                 pass
                             elif clip.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
-                                #clip.video = midjourney(prompt)
+                                # clip.video = midjourney(prompt)
                                 pass
 
                         else:
                             clip.video = create_caption(
                                 text=clip.asset,
-                                pos=clip.anchor,
                                 font="Courier-New-Bold",
                                 fontsize=70,
                                 color="white",
-                                has_bg=True,
+                                size=clip.size,
+                                pos=clip.anchor,
+                                has_bg=clip.has_background,
                             )
                         clips.append(clip)
 

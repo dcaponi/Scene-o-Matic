@@ -8,12 +8,8 @@ V_SIZE = (1080, 1920)
 H_SIZE = (1920, 1080)
 
 
-def create_caption(text, pos, font, fontsize, color, has_bg=False):
+def create_caption(text, font, fontsize, color, size, pos=("center", 300), has_bg=False):
     """Creates a caption clip for writing text on a video"""
-
-    y = 0
-    if pos == "top":
-        y = 300
     overlay = TextClip(
         text,
         font=font,
@@ -21,7 +17,7 @@ def create_caption(text, pos, font, fontsize, color, has_bg=False):
         color=color,
         stroke_width=4,
         method="caption",
-        size=(0.9 * 1080, 0),
+        size=size if size is not None else (0.9 * 1080, 0),
     )
     if has_bg:
         im_width, im_height = overlay.size
@@ -33,9 +29,9 @@ def create_caption(text, pos, font, fontsize, color, has_bg=False):
             color_clip = ColorClip(
                 size=(int(im_width * 1.1), im_height), color=(255, 255, 255)
             )
-        return CompositeVideoClip([color_clip, overlay]).set_pos(("center", y))
+        return CompositeVideoClip([color_clip, overlay]).set_pos(pos)
 
-    return overlay.set_pos(("center", y))
+    return overlay.set_pos(pos)
 
 
 
