@@ -16,7 +16,7 @@ def create_compilation(staging_dir: str, prompt: str, size=(1080, 1920), min_dur
     os.mkdir(outdir)
 
     while sum(clip.duration for clip in clips) < min_duration:
-        get_batch_stock_footage(outdir, video_search_terms)
+        get_batch_stock_footage(outdir, video_search_terms, size)
         print(colored(f"The minimum duration is {min_duration} seconds.", "yellow"))
         print(colored(f"You need {min_duration - sum(clip.duration for clip in clips)} seconds of footage", "yellow"))
         input(colored(f"Remove or insert clips into {outdir} now. Press enter to continue...", "yellow"))
@@ -32,10 +32,10 @@ def create_compilation(staging_dir: str, prompt: str, size=(1080, 1920), min_dur
     return concatenate_videoclips(clips).set_fps(30)
 
 
-def get_batch_stock_footage(outdir: str, video_search_terms):
+def get_batch_stock_footage(outdir: str, video_search_terms, size=(1080, 1920)):
     video_urls = []
     for search_term in video_search_terms:
-        video_url = get_video(search_term)
+        video_url = get_video(search_term, size)
         if video_url != None and video_url not in video_urls and video_url != "":
             video_urls.append(video_url)
 

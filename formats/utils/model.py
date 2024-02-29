@@ -5,6 +5,7 @@ import os
 import sys
 from typing import List, Optional
 from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip
+from termcolor import colored
 from generative.generative_asset import generative_tts, generative_video
 
 from formats.utils.edit_utils import create_caption
@@ -54,7 +55,10 @@ def movies_from_json(filepath):
             movies = []
             for movie_data in data:
                 staging_dir = f"./output/{movie_data.get('title')}"
-                os.mkdir(staging_dir)
+                try:
+                    os.mkdir(staging_dir)
+                except FileExistsError:
+                    print(colored(f"{staging_dir} exists!"))
 
                 scenes_data = movie_data.get("scenes", [])
                 scenes = []
