@@ -16,6 +16,7 @@ class Clip:
     override_audio: Optional[Clip] = None
     video: VideoFileClip = None
     audio: AudioFileClip = None
+    has_subtitles: bool = False
     has_greenscreen: bool = False
     has_background: bool = True
     prompt: str = None
@@ -108,8 +109,10 @@ def movies_from_json(filepath):
                                     pos=clip.anchor,
                                     has_bg=clip.has_background,
                                 )
-                            clips.append(clip)
+                            
 
+                        clips.append(clip)
+                        
                     scene = Scene(**scene_data)
                     scene.clips = clips
                     scene.audio = CompositeAudioClip([scene.clips[x].audio for x in scene.use_audio])
