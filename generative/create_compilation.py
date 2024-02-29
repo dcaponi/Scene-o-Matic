@@ -1,21 +1,19 @@
 import glob
+import shutil
 from uuid import uuid4
 from moviepy.video.fx.all import crop
 
 import requests
 from termcolor import colored
-from llm.openai import video_search_terms_array
+from generative.llm.openai import video_search_terms_array
 from stock_footage.pexels import get_video
 from moviepy.editor import *
 
-QUANTITY_SEARCH_TERMS = 20
-
-def create_compilation(outdir: str, bg=None, script=None, min_duration=60):
+def create_compilation(staging_dir: str, prompt: str, size=(1080, 1920), min_duration=60):
     clips = []
-    if bg and script:
-        video_search_terms = video_search_terms_array(bg, script, QUANTITY_SEARCH_TERMS)
-    else:
-        video_search_terms = ["peaceful", "flowers", "waterfall"]
+    video_search_terms = video_search_terms_array(prompt, min_duration // 10)
+    outdir = f"{staging_dir}/videos"
+    os.mkdir(outdir)
 
     while sum(clip.duration for clip in clips) < min_duration:
         get_batch_stock_footage(outdir, video_search_terms)
@@ -25,11 +23,12 @@ def create_compilation(outdir: str, bg=None, script=None, min_duration=60):
         video_paths = [f"{vp}" for vp in glob.glob(f"{outdir}/*.mp4")]
         for video_path in video_paths:
             clip = VideoFileClip(video_path).without_audio().set_fps(30)
-            clip = crop(clip,width=1080,height=1920).resize((1080, 1920))
+            clip = crop(clip, width=size[0], height=size[1]).resize(size)
 
             clips.append(clip)
             os.remove(video_path)
 
+    shutil.rmtree(outdir)
     return concatenate_videoclips(clips).set_fps(30)
 
 

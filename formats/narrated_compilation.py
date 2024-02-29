@@ -1,14 +1,12 @@
 from uuid import uuid4
 from moviepy.editor import *
 from termcolor import colored
-from formats.utils.create_compilation import create_compilation
+from generative.create_compilation import create_compilation
 from subtitle.subtitle import create_subtitles
-from llm.openai import generate_script
+from generative.llm.openai import generate_script
 from moviepy.video.tools.subtitles import SubtitlesClip
-from tts.tts import tts
+from generative.tts.tts import tts
 import re
-
-from llm.openai import generate_script
 
 MAX_DURATION_SECONDS = 60
 

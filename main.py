@@ -4,7 +4,7 @@ from natsort import natsorted
 from moviepy.editor import *
 
 from formats.utils.model import movies_from_json
-from formats.utils.scene_builder import make_stacked_scene
+from formats.utils.scene_builder import make_stacked_scene, make_montage_scene
 
 PRODUCTS_DIR = "output"
 
@@ -42,11 +42,8 @@ if __name__ == "__main__":
     movies = movies_from_json("./manifest.json")
     for movie in movies:
         if movie.title not in existing_titles:
-            outdir = f"./{PRODUCTS_DIR}/{movie.title}"
-            os.mkdir(outdir)
-
             for i, scene in enumerate(movie.scenes):
-                scene.temp_file = f"{outdir}/{i}.mp4"
+                scene.temp_file = f"{movie.temp_file}/{i}.mp4"
 
                 if scene.arrangement == "stack":
                     built_scene = make_stacked_scene(scene.clips)
@@ -57,14 +54,22 @@ if __name__ == "__main__":
                 if scene.arrangement == "pip":
                     pass
                 if scene.arrangement == "montage":
-                    pass
+                    built_scene = make_montage_scene(scene.clips)
 
                 duration = min([c.video.duration for c in scene.clips if c.video is not None and c.video.duration > 0])
                 duration = min([duration, scene.audio.duration])
 
                 built_scene = built_scene.resize(movie.final_size).set_audio(scene.audio).set_duration(duration)
                 scene_threads.append(
-                    threading.Thread(target=write, args=(built_scene, f"{scene.temp_file}", f"{outdir}/{i}.mp3", 8, ))
+                    threading.Thread(
+                        target=write,
+                        args=(
+                            built_scene,
+                            f"{scene.temp_file}",
+                            f"{movie.temp_file}/{i}.mp3",
+                            8,
+                        ),
+                    )
                 )
 
     for thread in scene_threads:

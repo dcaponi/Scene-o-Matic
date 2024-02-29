@@ -6,10 +6,10 @@ from termcolor import colored
 
 openai_client = OpenAI(api_key=environ.get("OPENAI_API_KEY"))
 
-def video_search_terms_array(video_subject: str, script: str, amount=1):
+def video_search_terms_array(prompt: str, amount=1):
     prompt = f"""
-    Generate {amount} search terms for stock videos for the given subject of a video.
-    Subject: {video_subject}
+    Generate {amount} search terms for stock videos for the given prompt.
+    Prompt: {prompt}
 
     The search terms must be returned as a JSON-Array of strings.
 
@@ -22,9 +22,6 @@ def video_search_terms_array(video_subject: str, script: str, amount=1):
 
     ONLY RETURN THE JSON-ARRAY OF STRINGS.
     DO NOT RETURN ANYTHING ELSE.
-
-    For context, here is the full text:
-    {script}
     """
 
     response = openai_client.chat.completions.create(

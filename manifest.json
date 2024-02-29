@@ -1,58 +1,57 @@
 [
     {
-        "title": "swag2",
-        "publish_destinations": ["instagram"],
+        "title": "motoplane",
         "final_size": [1080, 1920],
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [1],
+                "use_audio": [0],
                 "clips": [
                     {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "has_greenscreen": true,
-                        "anchor": ["right", "bottom"],
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "CEO: You're all getting a treat for record profits this quarter",
-                        "anchor": ["center", "top"],
-                        "location": [0, 275]
+                        "asset": "sports cars like lamborghinis, ferraris, and porsches driving.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "make a funny script about idiots on motorcycles; it should be about 30 seconds long and PG-13.tiktok",
+                            "voice": "en_male_funny"
+                        }
                     }
                 ]
             },
             {
-                "arrangement": "stack",
-                "use_audio": [1],
+                "arrangement": "montage",
+                "use_audio": [0],
                 "clips": [
                     {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
-                    },
+                        "asset": "sports cars like lamborghinis, ferraris, and porsches driving.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "make a funny script about idiots in airplanes; it should be about 30 seconds long and PG-13.whisper",
+                            "voice": "echo"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "cars2",
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
                     {
-                        "asset": "./assets/videos/cat-slap.mp4",
-                        "has_greenscreen": true,
-                        "anchor": ["right", "bottom"],
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "CEO",
-                        "anchor": ["left", "center"],
-                        "size": [300, 0],
-                        "location": [300, 0]
-                    },
-                    {
-                        "asset": "Me",
-                        "anchor": ["center", "top"],
-                        "size": [300, 0],
-                        "location": [200, 500]
+                        "asset": "running.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "make a funny script about idiots on running on trails; it should be about 30 seconds long and PG-13.whisper",
+                            "voice": "echo"
+                        }
                     }
                 ]
             }
         ]
     }
 ]
+

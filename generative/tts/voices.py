@@ -49,4 +49,4 @@ tiktok = [
     "en_female_emotional",  # peaceful
 ]
 
-openai = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
+whisper = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
