@@ -1,15 +1,23 @@
 [
     {
         "title": "motoplane",
-        "final_size": [1080, 1920],
+        "final_size": [
+            1080,
+            1920
+        ],
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [0],
+                "use_audio": [
+                    0
+                ],
                 "clips": [
                     {
                         "asset": "sports cars like lamborghinis, ferraris, and porsches driving.rand",
-                        "size": [1080, 1920],
+                        "size": [
+                            1080,
+                            1920
+                        ],
                         "override_audio": {
                             "asset": "make a funny script about idiots on motorcycles; it should be about 30 seconds long and PG-13.tiktok",
                             "voice": "en_male_funny"
@@ -19,11 +27,16 @@
             },
             {
                 "arrangement": "montage",
-                "use_audio": [0],
+                "use_audio": [
+                    0
+                ],
                 "clips": [
                     {
                         "asset": "sports cars like lamborghinis, ferraris, and porsches driving.rand",
-                        "size": [1080, 1920],
+                        "size": [
+                            1080,
+                            1920
+                        ],
                         "override_audio": {
                             "asset": "make a funny script about idiots in airplanes; it should be about 30 seconds long and PG-13.whisper",
                             "voice": "echo"
@@ -35,15 +48,23 @@
     },
     {
         "title": "cars2",
-        "final_size": [1080, 1920],
+        "final_size": [
+            1920,
+            1080
+        ],
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [0],
+                "use_audio": [
+                    0
+                ],
                 "clips": [
                     {
                         "asset": "running.rand",
-                        "size": [1080, 1920],
+                        "size": [
+                            1920,
+                            1080
+                        ],
                         "override_audio": {
                             "asset": "make a funny script about idiots on running on trails; it should be about 30 seconds long and PG-13.whisper",
                             "voice": "echo"
@@ -54,4 +75,3 @@
         ]
     }
 ]
-
