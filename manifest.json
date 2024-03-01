@@ -1,6 +1,6 @@
 [
     {
-        "title": "meme",
+        "title": "cars2",
         "final_size": [1080, 1920],
         "has_subtitles": true,
         "scenes": [
@@ -9,20 +9,12 @@
                 "use_audio": [0],
                 "clips": [
                     {
-                        "asset": "./assets/background/networking-event.jpg",
+                        "asset": "orange cat kitty cat.rand",
                         "size": [1080, 1920],
                         "override_audio": {
-                            "asset": ".tiktok",
-                            "script": "some funny text about a guy getting hit in the nuts or something",
-                            "voice": "en_male_funny"
+                            "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
+                            "voice": "echo"
                         }
-                    },
-                    {
-                        
-                        "asset": "./assets/videos/stare.mp4",
-                        "has_greenscreen": true,
-                        "size": [1808, 1300],
-                        "anchor": ["center", "bottom"]
                     }
                 ]
             }
