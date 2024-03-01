@@ -15,6 +15,10 @@
                             "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
                             "voice": "echo"
                         }
+                    },
+                    {
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"]
                     }
                 ]
             }
