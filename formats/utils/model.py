@@ -73,13 +73,18 @@ def movies_from_json(filepath):
                     for i, clip_data in enumerate(clips_data):
                         clip = Clip(**clip_data)
                         if clip.override_audio:
+                            print(colored("detected audio override", "blue"))
                             audio_override = Clip(**clip.override_audio)
                             if audio_override.asset.endswith(('mp3', 'wav', 'ogg')):
+                                print(colored("assigning audio...", "blue"))
                                 clip.audio = AudioFileClip(audio_override.asset)
                             if audio_override.asset.endswith(("11l", "tiktok", "whisper")):
+                                print(colored("creating audio from tts...", "blue"))
                                 clip.audio = generative_tts(staging_dir, audio_override)
+                            print(colored("overide audio complete!", "blue"))
 
                         if os.path.exists(clip.asset):
+                            print(colored("creating moviepy objects...", "blue"))
                             if clip.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
                                 clip.video = VideoFileClip(clip.asset).set_duration(clip.duration).resize(clip.size)
                             elif clip.asset.endswith(('mp3', 'wav', 'ogg')):
@@ -90,18 +95,22 @@ def movies_from_json(filepath):
                                     clip.audio = clip.video.audio
 
                         else:
+                            print(colored("detected generative asset...", "blue"))
                             if clip.asset.endswith(('11l', 'tiktok', 'whisper')): # asset-name.tts -> go make a .mp3 using a tts from asset script
+                                print(colored("generating audio from tts...", "blue"))
                                 clip.audio = generative_tts(staging_dir, clip)
                             elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
                                 # clip.video = did_character(clip.script, clip.host_img) (maybe host_img could also end in .sd or .mj and it would make you a host)
                                 pass
                             elif clip.asset.endswith(('sora', 'rand')): # asset-name.sora -> go make a .mp4 from sora using a prompt
+                                print(colored("generating video from prompt...", "blue"))
                                 clip.video = generative_video(staging_dir, clip)
                             elif clip.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
                                 # clip.video = midjourney(prompt)
                                 pass
 
                             else:
+                                print(colored("generating caption...", "blue"))
                                 clip.video = create_caption(
                                     text=clip.asset,
                                     font="Courier-New-Bold",

@@ -2,6 +2,7 @@ import os
 import threading
 from natsort import natsorted
 from moviepy.editor import *
+from termcolor import colored
 
 from formats.utils.model import movies_from_json
 from formats.utils.scene_builder import make_stacked_scene, make_montage_scene
@@ -95,6 +96,7 @@ if __name__ == "__main__":
     for movie in movies:
         if movie.has_subtitles:
             movie_folder = f"{movie.temp_file}/{movie.title}"
+            print(colored(f"creating subtitles for {movie.title}", "blue"))
             subtitle_clip = create_subtitles(movie_folder)
             movie_clip = VideoFileClip(f"{movie_folder}.mp4")
             subtitled_movie = CompositeVideoClip([

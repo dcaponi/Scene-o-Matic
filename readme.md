@@ -60,3 +60,132 @@ or stacking 2 side-by-side clips with alternating dialog
 
 audio_asset lets us create audio to be added to a clip which is useful for
 d-id readings or narrated compilations or simply overriding the clip's original audio
+
+host_img - image of a headshot of someone to speak words using d-id
+type - ???
+duration - required if asset is a pic and theres no video or audio to set duration for
+size - required for all clips
+anchor - (left|right|center, top|center|bottom) defaults left top
+location - left, down from anchor position defaults 0, 0
+voice - one of the voices in voices.py must match ai model
+script - a script to be spoken with a tts
+prompt - a prompt for an image or video asset
+generative assets ending in .tiktok or .sora start with the prompt (e.g. this is the prompt write something about it .sora) if its a tts it will use openai chatgpt to generate the script
+has-background - used for text assets to give it a more distinct background
+has-greenscreen - a higher up in the stack clip has a greenscreen that should be removed
+asset - path to file or a prompt for a generative asset
+
+
+arrangement - stack, montage, horizontal, vertical, pip
+use_audio - array of clip indices whos audio should be mixed into the final video
+
+title - obvi
+has_subtitles - if true, generate subtitle srt and burn to the video
+final_size - final size of the produced video
+
+
+## Example 2 movies
+```json
+[
+    {
+        "title": "cars2",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "orange cat kitty cat.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
+                            "voice": "echo"
+                        }
+                    },
+                    {
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "cars",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "orange cat kitty cat.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
+                            "voice": "echo"
+                        }
+                    },
+                    {
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "meme",
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [1080, 1500],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when the pipeline works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            },
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "size": [1080, 1100],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when it dont works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    }
+]
+```

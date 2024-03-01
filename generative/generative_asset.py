@@ -22,6 +22,7 @@ def generative_tts(staging_dir, clip):
     if clip.script is not None:
         script = _split_string_on_punctuation(clip.script)
     else:
+        print(colored("generating script...", "blue"))
         script = generate_script(prompt, clip.duration)
 
     audio_clips = []
