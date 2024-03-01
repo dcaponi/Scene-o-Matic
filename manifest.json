@@ -1,48 +1,28 @@
 [
     {
-        "title": "cars2",
-        "final_size": [1920, 1080],
+        "title": "meme",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
         "scenes": [
             {
                 "arrangement": "stack",
                 "use_audio": [0],
                 "clips": [
                     {
-                        "asset": "running.rand",
-                        "has_subtitles": true,
-                        "size": [1920, 1080],
-                        "override_audio": {
-                            "asset": "make a funny script about idiots on running on trails; it should be about 30 seconds long and PG-13.whisper",
-                            "voice": "echo"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "meme",
-        "final_size": [1080, 1920],
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "clips": [
-                    {
                         "asset": "./assets/background/networking-event.jpg",
-                        "size": [1080, 1920]
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": ".tiktok",
+                            "script": "some funny text about a guy getting hit in the nuts or something",
+                            "voice": "en_male_funny"
+                        }
                     },
                     {
+                        
                         "asset": "./assets/videos/stare.mp4",
-                        "has_subtitles": true,
                         "has_greenscreen": true,
-                        "size": [1808, 1100],
+                        "size": [1808, 1300],
                         "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "when you go to the ceo meet & greet but dont know how to people",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
                     }
                 ]
             }

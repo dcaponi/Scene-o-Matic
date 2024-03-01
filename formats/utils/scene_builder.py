@@ -24,3 +24,4 @@ def make_montage_scene(clips: list[Clip]):
         if clip.video:
             videos.append(clip.video)
     return concatenate_videoclips(videos)
+

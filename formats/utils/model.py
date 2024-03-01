@@ -5,9 +5,10 @@ import os
 import sys
 from typing import List, Optional
 from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip
+from moviepy.video.tools.subtitles import SubtitlesClip
 from termcolor import colored
 from generative.generative_asset import generative_tts, generative_video
-
+from subtitle.subtitle import create_subtitles
 from formats.utils.edit_utils import create_caption
 
 @dataclass
@@ -16,7 +17,7 @@ class Clip:
     override_audio: Optional[Clip] = None
     video: VideoFileClip = None
     audio: AudioFileClip = None
-    has_subtitles: bool = False
+    subtitle: SubtitlesClip = None
     has_greenscreen: bool = False
     has_background: bool = True
     prompt: str = None
@@ -43,6 +44,7 @@ class Scene:
 class Movie:
     title: str
     scenes: List[Scene]
+    has_subtitles: bool = False
     publish_destinations: List[str] = field(default_factory=lambda: [])
     final_size: tuple[int, int] = field(default_factory=lambda: (1080, 1920))
     duration: int = 0
@@ -68,7 +70,7 @@ def movies_from_json(filepath):
                     clips_data = scene_data.get("clips", [])
                     clips = []
 
-                    for clip_data in clips_data:
+                    for i, clip_data in enumerate(clips_data):
                         clip = Clip(**clip_data)
                         if clip.override_audio:
                             audio_override = Clip(**clip.override_audio)
@@ -109,10 +111,9 @@ def movies_from_json(filepath):
                                     pos=clip.anchor,
                                     has_bg=clip.has_background,
                                 )
-                            
 
                         clips.append(clip)
-                        
+
                     scene = Scene(**scene_data)
                     scene.clips = clips
                     scene.audio = CompositeAudioClip([scene.clips[x].audio for x in scene.use_audio])
