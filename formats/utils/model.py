@@ -60,7 +60,6 @@ def movies_from_json(filepath):
                 if os.path.exists(f"{staging_dir}/{movie_data.get('title')}.mp4"):
                     print(colored("movie exists. skipping...", "blue"))
                     print(colored(f"to rebuild the movie, delete {staging_dir}/{movie_data.get('title')}.mp4 and try again","blue"))
-                    movies.append(Movie(**movie_data))
                     continue
 
                 try:
