@@ -114,6 +114,105 @@ final_size - final size of the produced video
         ]
     },
     {
+        "title": "meme",
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [1080, 1500],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when the pipeline works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            },
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "size": [1080, 1100],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when it dont works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+## A More complex example including multi-scene narrated compilations and multi scene meme clips
+```json
+[
+    {
+        "title": "cars2",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "orange cat kitty cat.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                            "voice": "en_male_funny"
+                        }
+                    },
+                    {
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            },
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "orange cat kitty cat.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                            "voice": "en_male_funny"
+                        }
+                    },
+                    {
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "title": "cars",
         "final_size": [1080, 1920],
         "has_subtitles": true,
@@ -126,12 +225,54 @@ final_size - final size of the produced video
                         "asset": "orange cat kitty cat.rand",
                         "size": [1080, 1920],
                         "override_audio": {
-                            "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
-                            "voice": "echo"
+                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                            "voice": "en_male_funny"
                         }
                     },
                     {
                         "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            },
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [1080, 1500],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when the pipeline works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            },
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "size": [1080, 1100],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when it dont works",
                         "anchor": ["center", "top"],
                         "location": [0, 400]
                     }

@@ -24,7 +24,6 @@ class Clip:
     script: str = None
     voice: str = None
     host_img: str = None
-    type: Optional[str] = None
     duration: int = None
     size: Optional[tuple[int, int]] = None
     location: tuple[int, int] = field(default_factory = lambda:(0, 0))
@@ -58,6 +57,12 @@ def movies_from_json(filepath):
             movies = []
             for movie_data in data:
                 staging_dir = f"./output/{movie_data.get('title')}"
+                if os.path.exists(f"{staging_dir}/{movie_data.get('title')}.mp4"):
+                    print(colored("movie exists. skipping...", "blue"))
+                    print(colored(f"to rebuild the movie, delete {staging_dir}/{movie_data.get('title')}.mp4 and try again","blue"))
+                    movies.append(Movie(**movie_data))
+                    continue
+
                 try:
                     os.mkdir(staging_dir)
                 except FileExistsError:
@@ -70,7 +75,7 @@ def movies_from_json(filepath):
                     clips_data = scene_data.get("clips", [])
                     clips = []
 
-                    for i, clip_data in enumerate(clips_data):
+                    for clip_data in clips_data:
                         clip = Clip(**clip_data)
                         if clip.override_audio:
                             print(colored("detected audio override", "blue"))
@@ -96,13 +101,13 @@ def movies_from_json(filepath):
 
                         else:
                             print(colored("detected generative asset...", "blue"))
-                            if clip.asset.endswith(('11l', 'tiktok', 'whisper')): # asset-name.tts -> go make a .mp3 using a tts from asset script
+                            if clip.asset.endswith(('11l', 'tiktok', 'whisper')): 
                                 print(colored("generating audio from tts...", "blue"))
                                 clip.audio = generative_tts(staging_dir, clip)
                             elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
                                 # clip.video = did_character(clip.script, clip.host_img) (maybe host_img could also end in .sd or .mj and it would make you a host)
                                 pass
-                            elif clip.asset.endswith(('sora', 'rand')): # asset-name.sora -> go make a .mp4 from sora using a prompt
+                            elif clip.asset.endswith(('sora', 'rand')): 
                                 print(colored("generating video from prompt...", "blue"))
                                 clip.video = generative_video(staging_dir, clip)
                             elif clip.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
@@ -132,6 +137,7 @@ def movies_from_json(filepath):
                 movie.temp_file = staging_dir
                 movie.scenes = scenes
                 movies.append(movie)
+
             return movies
 
     except FileNotFoundError:
