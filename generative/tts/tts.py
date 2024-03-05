@@ -1,4 +1,3 @@
-from io import BytesIO
 import os
 from moviepy.editor import AudioFileClip
 from termcolor import colored

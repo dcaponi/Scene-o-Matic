@@ -47,16 +47,15 @@ def write(
 
 
 if __name__ == "__main__":
-    # main()
-    scene_threads = []
     movie_threads = []
 
     movies = movies_from_json("./2-mar-24.json", PRODUCTS_DIR)
     for movie in movies:
+
         for i, scene in enumerate(movie.scenes):
-            if os.path.exists(f"{movie.staging_dir}/{i}.mp4"):
-                print(colored(f"scene {movie.staging_dir}/{i}.mp4 exists...", "blue"))
-                print(colored(f"To recreate, delete {movie.staging_dir}/{i}.mp4 and try again", "blue"))
+            if os.path.exists(f"{movie.staging_dir}{i}.mp4"):
+                print(colored(f"scene {movie.staging_dir}{i}.mp4 exists...", "blue"))
+                print(colored(f"To recreate, delete {movie.staging_dir}{i}.mp4 and try again", "blue"))
                 continue
 
             for clip in scene.clips:
@@ -88,28 +87,15 @@ if __name__ == "__main__":
             )
             duration = min([duration, scene.audio.duration])
 
-            built_scene = (
+            scene.video_clip = (
                 built_scene.resize(movie.final_size)
                 .set_duration(duration)
                 .set_audio(scene.audio)
                 .set_fps(30)
             )
 
-            scene_threads.append(
-                threading.Thread(
-                    target=write,
-                    args=(built_scene, movie.staging_dir, i, False, 8, ),
-                )
-            )
-
-    for thread in scene_threads:
-        thread.start()
-
-    for thread in scene_threads:
-        thread.join()
-
     for movie in movies:
-        scene_clips = [VideoFileClip(f"{movie.staging_dir}/{i}.mp4") for i, _ in enumerate(movie.scenes)]
+        scene_clips = [scene.video_clip for scene in movie.scenes]
         if len(scene_clips) > 0:
             final_movie = concatenate_videoclips(scene_clips)
             movie_threads.append(

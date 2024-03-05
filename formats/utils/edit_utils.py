@@ -1,5 +1,4 @@
 from moviepy.editor import *
-from moviepy.video.tools.segmenting import findObjects
 from moviepy.video.fx.all import crop
 from moviepy.video.fx.fadein import fadein
 from moviepy.video.fx.fadeout import fadeout

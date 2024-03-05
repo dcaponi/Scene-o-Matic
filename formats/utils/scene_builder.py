@@ -1,8 +1,6 @@
 from moviepy.editor import concatenate_videoclips
-from ast import List
 from formats.utils.edit_utils import remove_greenscreen, stack
 from formats.utils.model import Clip
-
 
 def make_stacked_scene(clips: list[Clip]):
     built_scene = None

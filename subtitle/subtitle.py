@@ -4,7 +4,7 @@ import srt_equalizer
 from termcolor import colored
 from dotenv import load_dotenv
 from os import getenv
-from moviepy.editor import AudioClip, TextClip
+from moviepy.editor import TextClip
 from moviepy.video.tools.subtitles import SubtitlesClip
 
 
