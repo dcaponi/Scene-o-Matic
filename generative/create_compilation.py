@@ -12,12 +12,12 @@ from moviepy.editor import *
 def create_compilation(project_dir: str, prompt: str, size=(1080, 1920), min_duration=60):
 
     comp_source_videos = f"{project_dir}/compilation_sources"
-    comp_temp_file = f"{comp_source_videos}/compilation.mp4"
+    comp_staging_dir = f"{comp_source_videos}/compilation.mp4"
 
-    if os.path.exists(comp_temp_file):
+    if os.path.exists(comp_staging_dir):
         print(colored("compiliation exists. skipping...", "blue"))
-        print(colored(f"to remake compilation, delete {comp_temp_file} and try again.", "blue"))
-        return VideoFileClip(comp_temp_file)
+        print(colored(f"to remake compilation, delete {comp_staging_dir} and try again.", "blue"))
+        return VideoFileClip(comp_staging_dir)
 
     clips = []
     video_search_terms = video_search_terms_array(prompt, min_duration // 10)
@@ -36,9 +36,9 @@ def create_compilation(project_dir: str, prompt: str, size=(1080, 1920), min_dur
             clips.append(clip)
             os.remove(video_path)
 
-    concatenate_videoclips(clips).without_audio().set_fps(30).write_videofile(comp_temp_file, threads=8, audio=False)
+    concatenate_videoclips(clips).without_audio().set_fps(30).write_videofile(comp_staging_dir, threads=8, audio=False)
 
-    return VideoFileClip(comp_temp_file)
+    return VideoFileClip(comp_staging_dir)
 
 
 def get_batch_stock_footage(comp_source_videos: str, video_search_terms, size=(1080, 1920)):

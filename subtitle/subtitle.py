@@ -34,8 +34,6 @@ def create_subtitles(output_path: str, movie_path: str):
         print(colored(f"to recreate subtitles, delete {out_file} and try again", "blue"))
         return SubtitlesClip(f"{out_file}", generator).set_pos(("center", "center")).set_fps(24)
 
-    os.mkdir(output_path)
-
     transcript = transcriber.transcribe(movie_path) # also accepts web urls
 
     subtitles = transcript.export_subtitles_srt()

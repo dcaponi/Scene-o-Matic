@@ -33,7 +33,6 @@ class Clip:
 @dataclass
 class Scene:
     clips: List[Clip]
-    temp_file: str = ""
     arrangement: str = "vertical"
     audio: AudioFileClip = None
     use_audio: List[int] = field(default_factory=lambda: [0])
@@ -47,25 +46,26 @@ class Movie:
     publish_destinations: List[str] = field(default_factory=lambda: [])
     final_size: tuple[int, int] = field(default_factory=lambda: (1080, 1920))
     duration: int = 0
-    temp_file: str = None
+    staging_dir: str = None
 
 
-def movies_from_json(filepath):
+def movies_from_json(filepath, projects_folder):
     try:
         with open(filepath, 'r') as file:
             data = json.load(file)
             movies = []
             for movie_data in data:
-                staging_dir = f"./output/{movie_data.get('title')}"
-                if os.path.exists(f"{staging_dir}/{movie_data.get('title')}.mp4"):
-                    print(colored("movie exists. skipping...", "blue"))
-                    print(colored(f"to rebuild the movie, delete {staging_dir}/{movie_data.get('title')}.mp4 and try again","blue"))
+                movie = Movie(**movie_data)
+                movie.staging_dir = f"./{projects_folder}/{movie_data.get('title')}"
+                if os.path.exists(f"{movie.staging_dir}/{movie.title}.mp4"):
+                    print(colored(f"movie {movie.title} exists. skipping...", "blue"))
+                    print(colored(f"to rebuild the movie, delete {movie.staging_dir}/{movie_data.get('title')}.mp4 and try again","blue"))
                     continue
 
                 try:
-                    os.mkdir(staging_dir)
+                    os.mkdir(movie.staging_dir)
                 except FileExistsError:
-                    print(colored(f"{staging_dir} exists!"))
+                    print(colored(f"{movie.staging_dir} exists!"))
 
                 scenes_data = movie_data.get("scenes", [])
                 scenes = []
@@ -84,7 +84,7 @@ def movies_from_json(filepath):
                                 clip.audio = AudioFileClip(audio_override.asset)
                             if audio_override.asset.endswith(("11l", "tiktok", "whisper")):
                                 print(colored("creating audio from tts...", "blue"))
-                                clip.audio = generative_tts(staging_dir, audio_override)
+                                clip.audio = generative_tts(movie.staging_dir, audio_override)
                             print(colored("overide audio complete!", "blue"))
 
                         if os.path.exists(clip.asset):
@@ -102,13 +102,13 @@ def movies_from_json(filepath):
                             print(colored("detected generative asset...", "blue"))
                             if clip.asset.endswith(('11l', 'tiktok', 'whisper')): 
                                 print(colored("generating audio from tts...", "blue"))
-                                clip.audio = generative_tts(staging_dir, clip)
+                                clip.audio = generative_tts(movie.staging_dir, clip)
                             elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
                                 # clip.video = did_character(clip.script, clip.host_img) (maybe host_img could also end in .sd or .mj and it would make you a host)
                                 pass
                             elif clip.asset.endswith(('sora', 'rand')): 
                                 print(colored("generating video from prompt...", "blue"))
-                                clip.video = generative_video(staging_dir, clip)
+                                clip.video = generative_video(movie.staging_dir, clip)
                             elif clip.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
                                 # clip.video = midjourney(prompt)
                                 pass
@@ -132,8 +132,6 @@ def movies_from_json(filepath):
                     scene.audio = CompositeAudioClip([scene.clips[x].audio for x in scene.use_audio])
                     scenes.append(scene)
 
-                movie = Movie(**movie_data)
-                movie.temp_file = staging_dir
                 movie.scenes = scenes
                 movies.append(movie)
 
