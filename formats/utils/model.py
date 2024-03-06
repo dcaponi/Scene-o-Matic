@@ -5,6 +5,7 @@ import os
 import sys
 from typing import List, Optional
 from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip, VideoClip
+from moviepy.video.fx.all import resize
 from moviepy.video.tools.subtitles import SubtitlesClip
 from termcolor import colored
 from generative.generative_asset import generative_tts, generative_video
@@ -107,17 +108,6 @@ def movies_from_json(filepath, projects_folder):
                                 if clip.audio is None:
                                     clip.audio = clip.video.audio
 
-                            if clip.video:
-                                if scene.arrangement == "horizontal":
-                                    clip.video.resize((1920 // len(clips_data), 1080))
-                                elif scene.arrangement == "vertical":
-                                    clip.video.resize((1080, 1920 // len(clips_data)))
-                                else:
-                                    if clip.size is not None:
-                                        clip.video.resize(clip.size)
-                                    else:
-                                        print(colored(f"[{movie.title}]: For the arrangement {scene.arrangement}, a size is required"))
-
                             print(colored(f"[{movie.title}]: Finished assigning assets!", "green"))
 
                         else:
@@ -148,6 +138,8 @@ def movies_from_json(filepath, projects_folder):
                                 )
                             print(colored(f"[{movie.title}]: finished generating assets!", "green"))
 
+                        if clip.video is not None and clip.size is not None:
+                            clip.video = clip.video.resize(clip.size)
                         clips.append(clip)
 
                     scene.clips = clips

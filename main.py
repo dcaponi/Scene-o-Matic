@@ -72,15 +72,15 @@ if __name__ == "__main__":
             elif scene.arrangement == "vertical":
                 built_scene = make_vertical_arranged_scene(scene.clips)
                 if movie.final_size is not None:
-                    built_scene.resize(movie.final_size)
+                    built_scene = built_scene.resize(movie.final_size)
                 else:
-                    built_scene.resize((1080, 1920))
+                    built_scene = built_scene.resize((1080, 1920))
             elif scene.arrangement == "horizontal":
                 built_scene = make_horizontal_arranged_scene(scene.clips)
                 if movie.final_size is not None:
                     built_scene.resize(movie.final_size)
                 else:
-                    built_scene.resize((1920, 1080))
+                    built_scene = built_scene.resize((1920, 1080))
             elif scene.arrangement == "pip":
                 pass
             elif scene.arrangement == "montage":
@@ -101,7 +101,10 @@ if __name__ == "__main__":
             duration = min([duration, scene.audio.duration])
 
             scene.video_clip = (
-                built_scene.set_duration(duration).set_audio(scene.audio).set_fps(30)
+                built_scene.resize(movie.final_size)
+                .set_duration(duration)
+                .set_audio(scene.audio)
+                .set_fps(30)
             )
 
     for movie in movies:

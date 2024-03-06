@@ -1,24 +1,22 @@
 [
     {
         "title": "side_by_side",
+        "final_size": [1920, 1080],
         "scenes": [
             {
-                "arrangement": "stack",
+                "arrangement": "horizontal",
                 "use_audio": [1],
                 "clips": [
                     {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1080, 1920]
+                        "asset": "./assets/background/code.jpg"
                     },
                     {
                         "asset": "./assets/videos/toothless.mp4",
                         "has_greenscreen": true,
-                        "size": [540, 1920],
                         "anchor": ["left", "bottom"]
                     },
                     {
-                        "asset": "./assets/videos/cat-drama.mp4",
-                        "size": [540, 1920],
+                        "asset": "./assets/videos/toothless.mp4",
                         "anchor": ["right", "bottom"]
                     }
                 ]
