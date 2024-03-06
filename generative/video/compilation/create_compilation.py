@@ -1,5 +1,4 @@
 import glob
-import shutil
 from uuid import uuid4
 from moviepy.video.fx.all import crop
 
