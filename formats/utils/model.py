@@ -54,10 +54,10 @@ def movies_from_json(filepath, projects_folder):
             data = json.load(file)
             movies = []
             for movie_data in data:
-                print(colored(f"[{movie.title}]: unpacking...", "blue"))
-
                 movie = Movie(**movie_data)
                 movie.staging_dir = f"./{projects_folder}/{movie_data.get('title')}"
+
+                print(colored(f"[{movie.title}]: unpacking...", "blue"))
 
                 if os.path.exists(f"{movie.staging_dir}/{movie.title}.mp4"):
                     print(colored(f"movie {movie.title} exists. skipping...", "blue"))
@@ -87,7 +87,7 @@ def movies_from_json(filepath, projects_folder):
                                 print(colored(f"[{movie.title}]: assigning audio...", "blue"))
                                 clip.audio = AudioFileClip(audio_override.asset)
 
-                            if audio_override.asset.endswith(("11l", "tiktok", "whisper")):
+                            if audio_override.asset.endswith(("xi_labs", "tiktok", "whisper")):
                                 print(colored(f"[{movie.title}]: creating audio from tts for...", "blue"))
                                 clip.audio = generative_tts(movie.staging_dir, audio_override)
 
@@ -111,7 +111,7 @@ def movies_from_json(filepath, projects_folder):
 
                         else:
                             print(colored(f"[{movie.title}]: detected generative asset...", "blue"))
-                            if clip.asset.endswith(('11l', 'tiktok', 'whisper')): 
+                            if clip.asset.endswith(('xi_labs', 'tiktok', 'whisper')): 
                                 print(colored(f"[{movie.title}]: generating audio from tts...", "blue"))
                                 clip.audio = generative_tts(movie.staging_dir, clip)
                             elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script

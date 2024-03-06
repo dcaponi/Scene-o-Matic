@@ -12,31 +12,9 @@
                         "asset": "office pizza rainforrest friends clouds jungle.rand",
                         "size": [1080, 1920],
                         "override_audio": {
-                            "asset": ".tiktok",
-                            "script": "./assets/scripts/meeting.txt",
-                            "voice": "en_male_funny"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "ping",
-        "final_size": [1080, 1920],
-        "has_subtitles": true,
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "office messenger clouds ocean.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": ".tiktok",
-                            "script": "./assets/scripts/ping.txt",
-                            "voice": "en_male_funny"
+                            "asset": ".xi_labs",
+                            "script": "this is a funny video read in a really decent voice",
+                            "voice": "drew"
                         }
                     }
                 ]

@@ -1,10 +1,10 @@
 import os
 from moviepy.editor import AudioFileClip
 from termcolor import colored
-from generative.tts.elevenlabs import elevenlabs_tts
+from generative.tts.xi_labs import elevenlabs_tts
 from generative.tts.openai import openai_tts
 from generative.tts.tiktok import tiktok_tts
-from generative.tts.voices import tiktok, whisper
+from generative.tts.voices import tiktok, whisper, elevenlabs
 from dotenv import load_dotenv
 
 load_dotenv("../.env")
@@ -25,8 +25,8 @@ def tts(
         if text_speaker in voices()[source]:
             if source == "tiktok":
                 audio_data = tiktok_tts(req_text, text_speaker)
-            if source == "elevenlabs":
-                audio_data = elevenlabs_tts(req_text, text_speaker)
+            if source == "xi_labs":
+                audio_data = elevenlabs_tts(req_text, voices()[source][text_speaker]) # translate voice name to voice id because elevenlabs api
             if source == "whisper":
                 audio_data = openai_tts(req_text, text_speaker)
         else:
@@ -50,7 +50,7 @@ def tts(
 
 
 def voices():
-    return {"tiktok": tiktok, "whisper": whisper}
+    return {"tiktok": tiktok, "whisper": whisper, "xi_labs": elevenlabs}
 
 def sources():
-    return ["tiktok", "whisper"]
+    return ["tiktok", "whisper", "xi_labs"]

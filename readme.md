@@ -28,7 +28,7 @@ To get back to your home package context
 3. `Clips` - image, audio, or video assets to add to a scene.
    1. you tell each clip where in the video it lives in relation to the final size (left bottom for example) and some left/down offset for fine tuning. You'll also tell it if it has a greenscreen to mask away for stacking
    2. You also tell each clip where to find the asset, or to create one using one of the machine learning extension
-      1. audio: `.mu` for mubert or `.tiktok` for tik tok tts or `.11l` for elevenlabs or `.whisper` for openai whisper
+      1. audio: `.mu` for mubert or `.tiktok` for tik tok tts or `.xi_labs` for elevenlabs or `.whisper` for openai whisper
       2. video: `.sora` for openai sora or `.did` for d-id talking head type videos or `.rand` to have openai create some search terms based on a prompt and you'll get to choose from a selection of stock videos to merge into a background video.
       3. image: `.sd` for stable diffusion `.dall-e` for dall-e and `.mj` for midjourney
    3. In vertical/horizontal scenes the clips are arranged in order from top down or left to right

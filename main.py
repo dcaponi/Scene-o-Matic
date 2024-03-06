@@ -49,7 +49,7 @@ def write(
 if __name__ == "__main__":
     movie_threads = []
 
-    movies = movies_from_json("./2-mar-24.json", PRODUCTS_DIR)
+    movies = movies_from_json("./manifest.json", PRODUCTS_DIR)
     for movie in movies:
 
         for i, scene in enumerate(movie.scenes):

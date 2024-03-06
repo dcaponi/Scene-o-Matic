@@ -1,3 +1,5 @@
+from generative.tts.xi_labs import voices as elevenlabs_voices
+
 tiktok = [
     # DISNEY VOICES
     "en_us_ghostface",  # Ghost Face
@@ -50,3 +52,4 @@ tiktok = [
 ]
 
 whisper = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
+elevenlabs = elevenlabs_voices()
