@@ -64,7 +64,7 @@ d-id readings or narrated compilations or simply overriding the clip's original 
 host_img - image of a headshot of someone to speak words using d-id
 type - ???
 duration - required if asset is a pic and theres no video or audio to set duration for
-size - required for all clips
+size - required for all clips *unless using `horizontal` or `vertical` arrangements*
 anchor - (left|right|center, top|center|bottom) defaults left top
 location - left, down from anchor position defaults 0, 0
 voice - one of the voices in voices.py must match ai model
@@ -76,12 +76,12 @@ has-greenscreen - a higher up in the stack clip has a greenscreen that should be
 asset - path to file or a prompt for a generative asset
 
 
-arrangement - stack, montage, horizontal, vertical, pip
+arrangement - stack, montage, horizontal, vertical, pip. (Vertical and horizontal will distribute the clips to fill the final size evenly)
 use_audio - array of clip indices whos audio should be mixed into the final video
 
 title - obvi
 has_subtitles - if true, generate subtitle srt and burn to the video
-final_size - final size of the produced video
+final_size - final size of the produced video required unless using `horizontal` or `vertical` arrangements defaults to 1080, 1920
 
 
 ## Example 2 movies
@@ -108,6 +108,26 @@ final_size - final size of the produced video
                         "asset": "orange cat story time",
                         "anchor": ["center", "top"],
                         "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "vert",
+        "scenes": [
+            {
+                "arrangement": "vertical",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/videos/cat-drama.mp4"
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4"
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4"
                     }
                 ]
             }
