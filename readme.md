@@ -84,11 +84,11 @@ has_subtitles - if true, generate subtitle srt and burn to the video
 final_size - final size of the produced video required unless using `horizontal` or `vertical` arrangements defaults to 1080, 1920
 
 
-## Example 2 movies
+## Examples
 ```json
 [
     {
-        "title": "cars2",
+        "title": "narrated with generated script and caption",
         "final_size": [1080, 1920],
         "has_subtitles": true,
         "scenes": [
@@ -114,7 +114,29 @@ final_size - final size of the produced video required unless using `horizontal`
         ]
     },
     {
-        "title": "vert",
+        "title": "narrated with pre-made script",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "office pizza rainforrest friends clouds jungle.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": ".tiktok",
+                            "script": "./assets/scripts/meeting.txt",
+                            "voice": "en_male_funny"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "vertically arranged clips",
         "scenes": [
             {
                 "arrangement": "vertical",
@@ -134,128 +156,9 @@ final_size - final size of the produced video required unless using `horizontal`
         ]
     },
     {
-        "title": "meme",
+        "title": "multi scene",
         "final_size": [1080, 1920],
         "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [1080, 1500],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "when the pipeline works",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            },
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "./assets/videos/stare.mp4",
-                        "size": [1080, 1100],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "when it dont works",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            }
-        ]
-    }
-]
-```
-
-## A More complex example including multi-scene narrated compilations and multi scene meme clips
-```json
-[
-    {
-        "title": "cars2",
-        "final_size": [1080, 1920],
-        "has_subtitles": true,
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "orange cat kitty cat.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
-                            "voice": "en_male_funny"
-                        }
-                    },
-                    {
-                        "asset": "orange cat story time",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            },
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "orange cat kitty cat.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
-                            "voice": "en_male_funny"
-                        }
-                    },
-                    {
-                        "asset": "orange cat story time",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "cars",
-        "final_size": [1080, 1920],
-        "has_subtitles": true,
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "orange cat kitty cat.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
-                            "voice": "en_male_funny"
-                        }
-                    },
-                    {
-                        "asset": "orange cat story time",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            },
             {
                 "arrangement": "stack",
                 "use_audio": [1],
@@ -301,8 +204,8 @@ final_size - final size of the produced video required unless using `horizontal`
         ]
     },
     {
-        "title": "meme",
-        "final_size": [1080, 1920],
+        "title": "side by side same clip",
+        "final_size": [1920, 1080],
         "scenes": [
             {
                 "arrangement": "stack",
@@ -310,39 +213,19 @@ final_size - final size of the produced video required unless using `horizontal`
                 "clips": [
                     {
                         "asset": "./assets/background/code.jpg",
-                        "size": [1080, 1920]
+                        "size": [1920, 1080]
                     },
                     {
                         "asset": "./assets/videos/toothless.mp4",
-                        "size": [1080, 1500],
+                        "size": [960, 540],
                         "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
+                        "anchor": ["left", "bottom"]
                     },
                     {
-                        "asset": "when the pipeline works",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            },
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
-                    },
-                    {
-                        "asset": "./assets/videos/stare.mp4",
-                        "size": [1080, 1100],
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [960, 540],
                         "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "when it dont works",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "anchor": ["right", "bottom"]
                     }
                 ]
             }
