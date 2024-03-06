@@ -2,7 +2,7 @@ import os
 import re
 from moviepy.editor import concatenate_audioclips, AudioFileClip
 from termcolor import colored
-from generative.create_compilation import create_compilation
+from generative.video.compilation.create_compilation import create_compilation
 from generative.llm.openai import generate_script
 from generative.tts.tts import tts
 

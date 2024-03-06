@@ -6,7 +6,7 @@ from moviepy.video.fx.all import crop
 import requests
 from termcolor import colored
 from generative.llm.openai import video_search_terms_array
-from stock_footage.pexels import get_video
+from generative.video.compilation.stock_footage.pexels import get_video
 from moviepy.editor import *
 
 def create_compilation(project_dir: str, prompt: str, size=(1080, 1920), min_duration=60):
