@@ -4,7 +4,12 @@ from moviepy.editor import *
 from termcolor import colored
 
 from formats.utils.model import movies_from_json
-from formats.utils.scene_builder import make_stacked_scene, make_montage_scene
+from formats.utils.scene_builder import (
+    make_stacked_scene,
+    make_montage_scene,
+    make_vertical_arranged_scene,
+    make_horizontal_arranged_scene,
+)
 
 from subtitle.subtitle import create_subtitles
 
@@ -65,9 +70,17 @@ if __name__ == "__main__":
             if scene.arrangement == "stack":
                 built_scene = make_stacked_scene(scene.clips)
             elif scene.arrangement == "vertical":
-                pass
+                built_scene = make_vertical_arranged_scene(scene.clips)
+                if movie.final_size is not None:
+                    built_scene.resize(movie.final_size)
+                else:
+                    built_scene.resize((1080, 1920))
             elif scene.arrangement == "horizontal":
-                pass
+                built_scene = make_horizontal_arranged_scene(scene.clips)
+                if movie.final_size is not None:
+                    built_scene.resize(movie.final_size)
+                else:
+                    built_scene.resize((1920, 1080))
             elif scene.arrangement == "pip":
                 pass
             elif scene.arrangement == "montage":
@@ -88,10 +101,7 @@ if __name__ == "__main__":
             duration = min([duration, scene.audio.duration])
 
             scene.video_clip = (
-                built_scene.resize(movie.final_size)
-                .set_duration(duration)
-                .set_audio(scene.audio)
-                .set_fps(30)
+                built_scene.set_duration(duration).set_audio(scene.audio).set_fps(30)
             )
 
     for movie in movies:

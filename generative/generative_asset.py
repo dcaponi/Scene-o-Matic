@@ -11,11 +11,13 @@ def generative_video(staging_dir, clip):
     if duration == None:
         print(colored("For generative videos specify a duration or provide an audio override for the clip to match duration on", "red"))
         return None
-    
+
     prompt, src = clip.asset.split(".")
     if src.lower() == 'rand':
         return create_compilation(staging_dir, prompt, clip.size, duration)
     if src.lower() == 'sora':
+        pass
+    if src.lower() == "d-id":
         pass
 
 def generative_tts(staging_dir, clip):

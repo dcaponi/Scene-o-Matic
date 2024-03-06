@@ -97,15 +97,26 @@ def movies_from_json(filepath, projects_folder):
                             print(colored(f"[{movie.title}]: creating moviepy objects...", "blue"))
 
                             if clip.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
-                                clip.video = VideoFileClip(clip.asset).set_duration(clip.duration).resize(clip.size)
+                                clip.video = VideoFileClip(clip.asset).set_duration(clip.duration)
 
                             elif clip.asset.endswith(('mp3', 'wav', 'ogg')):
                                 clip.audio = AudioFileClip(clip.asset)
 
                             elif clip.asset.endswith(('mp4', 'avi', 'mkv')):
-                                clip.video = VideoFileClip(clip.asset).resize(clip.size)
+                                clip.video = VideoFileClip(clip.asset)
                                 if clip.audio is None:
                                     clip.audio = clip.video.audio
+
+                            if clip.video:
+                                if scene.arrangement == "horizontal":
+                                    clip.video.resize((1920 // len(clips_data), 1080))
+                                elif scene.arrangement == "vertical":
+                                    clip.video.resize((1080, 1920 // len(clips_data)))
+                                else:
+                                    if clip.size is not None:
+                                        clip.video.resize(clip.size)
+                                    else:
+                                        print(colored(f"[{movie.title}]: For the arrangement {scene.arrangement}, a size is required"))
 
                             print(colored(f"[{movie.title}]: Finished assigning assets!", "green"))
 

@@ -1,21 +1,39 @@
 [
     {
-        "title": "meeting",
-        "final_size": [1080, 1920],
-        "has_subtitles": true,
+        "title": "horiz",
         "scenes": [
             {
-                "arrangement": "stack",
-                "use_audio": [0],
+                "arrangement": "horizontal",
+                "use_audio": [1],
                 "clips": [
                     {
-                        "asset": "office pizza rainforrest friends clouds jungle.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": ".xi_labs",
-                            "script": "this is a funny video read in a really decent voice",
-                            "voice": "drew"
-                        }
+                        "asset": "./assets/videos/cat-drama.mp4"
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4"
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "vert",
+        "scenes": [
+            {
+                "arrangement": "vertical",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/videos/cat-drama.mp4"
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4"
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4"
                     }
                 ]
             }
