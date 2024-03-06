@@ -26,7 +26,8 @@ def generative_tts(staging_dir, clip):
         print(colored(f"to change script, delete {tts_path} and try again", "blue"))
         return AudioFileClip(tts_path)
 
-    os.mkdir(f"{staging_dir}/tts")
+    if not os.path.exists(f"{staging_dir}/tts"):
+        os.mkdir(f"{staging_dir}/tts")
 
     prompt, src = clip.asset.split(".")
     if clip.script is not None:
