@@ -6,7 +6,6 @@ import sys
 from typing import List, Optional
 from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip, VideoClip
 from moviepy.video.tools.subtitles import SubtitlesClip
-from natsort import natsorted
 from termcolor import colored
 from generative.generative_asset import generative_tts, generative_video
 from formats.utils.edit_utils import create_caption
@@ -23,7 +22,6 @@ class Clip:
     prompt: str = None
     script: str = None
     voice: str = None
-    host_img: str = None
     duration: int = None
     size: Optional[tuple[int, int]] = None
     location: tuple[int, int] = field(default_factory = lambda:(0, 0))
@@ -57,7 +55,7 @@ def movies_from_json(filepath, projects_folder):
             movies = []
             for movie_data in data:
                 print(colored(f"[{movie.title}]: unpacking...", "blue"))
-                
+
                 movie = Movie(**movie_data)
                 movie.staging_dir = f"./{projects_folder}/{movie_data.get('title')}"
 
