@@ -41,6 +41,28 @@
         ]
     },
     {
+        "title": "narrated with pre-made script",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "office pizza rainforrest friends clouds jungle.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": ".tiktok",
+                            "script": "./assets/scripts/meeting.txt",
+                            "voice": "en_male_funny"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "title": "side by side same clip",
         "final_size": [1920, 1080],
         "scenes": [
@@ -63,6 +85,33 @@
                         "size": [960, 540],
                         "has_greenscreen": true,
                         "anchor": ["right", "bottom"]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "side by side same clip",
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [1080, 1000],
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"]
+                    },
+                    {
+                        "asset": "meme generator go brrrrr",
+                        "location": [0, 400],
+                        "anchor": ["center", "top"]
                     }
                 ]
             }
