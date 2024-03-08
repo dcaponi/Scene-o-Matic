@@ -1,6 +1,6 @@
 [
-    {
-        "title": "side_by_side",
+        {
+        "title": "audio_only",
         "scenes": [
             {
                 "arrangement": "stack",
@@ -63,28 +63,23 @@
         ]
     },
     {
-        "title": "side by side same clip",
-        "final_size": [1920, 1080],
+        "title": "vertically arranged clips",
         "scenes": [
             {
-                "arrangement": "stack",
+                "arrangement": "vertical",
                 "use_audio": [1],
                 "clips": [
                     {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1920, 1080]
+                        "asset": "./assets/videos/cat-drama.mp4",
+                        "size": [1080, 640]
                     },
                     {
                         "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
-                        "has_greenscreen": true,
-                        "anchor": ["left", "bottom"]
+                        "size": [1080, 640]
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
-                        "has_greenscreen": true,
-                        "anchor": ["right", "bottom"]
+                        "asset": "./assets/videos/stare.mp4",
+                        "size": [1080, 640]
                     }
                 ]
             }
@@ -140,7 +135,7 @@
     },
     {
         "title": "side by side same clip",
-        "final_size": [1080, 1920],
+        "final_size": [1920, 1080],
         "scenes": [
             {
                 "arrangement": "stack",
@@ -148,22 +143,22 @@
                 "clips": [
                     {
                         "asset": "./assets/background/code.jpg",
-                        "size": [1080, 1920]
+                        "size": [1920, 1080]
                     },
                     {
                         "asset": "./assets/videos/toothless.mp4",
-                        "size": [1080, 1000],
+                        "size": [960, 540],
                         "has_greenscreen": true,
                         "anchor": ["left", "bottom"]
                     },
                     {
-                        "asset": "meme generator go brrrrr",
-                        "location": [0, 400],
-                        "anchor": ["center", "top"]
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [960, 540],
+                        "has_greenscreen": true,
+                        "anchor": ["right", "bottom"]
                     }
                 ]
             }
         ]
     }
 ]
-
