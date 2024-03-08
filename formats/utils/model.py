@@ -77,7 +77,7 @@ def movies_from_json(filepath, projects_folder):
                     clips_data = scene_data.get("clips", [])
                     clips = []
 
-                    for clip_data in clips_data:
+                    for clip_data in scene_data.get("clips", []):
                         clip = Clip(**clip_data)
 
                         if clip.override_audio:
