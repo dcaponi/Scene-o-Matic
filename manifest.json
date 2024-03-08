@@ -1,27 +1,40 @@
 [
     {
         "title": "side_by_side",
-        "final_size": [1920, 1080],
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [1],
+                "use_audio": [0],
                 "clips": [
                     {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1920, 1080]
+                        "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                        "voice": "en_us_006"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "narrated with generated script and caption",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "orange cat kitty cat.rand",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                            "voice": "en_us_006"
+                        }
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
-                        "has_greenscreen": true,
-                        "anchor": ["left", "bottom"]
-                    },
-                    {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
-                        "has_greenscreen": true,
-                        "anchor": ["right", "bottom"]
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
                     }
                 ]
             }

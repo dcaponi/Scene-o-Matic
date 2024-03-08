@@ -87,6 +87,21 @@ final_size - final size of the produced video required unless using `horizontal`
 ## Examples
 ```json
 [
+        {
+        "title": "audio_only",
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                        "voice": "en_us_006"
+                    }
+                ]
+            }
+        ]
+    },
     {
         "title": "narrated with generated script and caption",
         "final_size": [1080, 1920],

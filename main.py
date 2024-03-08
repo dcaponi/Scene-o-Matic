@@ -89,26 +89,28 @@ if __name__ == "__main__":
                 print(colored("unrecognized scene arrangement", "red"))
                 continue
 
-            duration = min(
-                [
-                    c.video.duration
-                    for c in scene.clips
-                    if c.video is not None
-                    and c.video.duration is not None
-                    and c.video.duration > 0
-                ]
-            )
-            duration = min([duration, scene.audio.duration])
+            clip_durations = [
+                c.video.duration
+                for c in scene.clips
+                if c.video is not None
+                and c.video.duration is not None
+                and c.video.duration > 0
+            ]
 
-            scene.video_clip = (
-                built_scene.resize(movie.final_size)
-                .set_duration(duration)
-                .set_audio(scene.audio)
-                .set_fps(30)
-            )
+            if len(clip_durations) > 0:
+                duration = min(clip_durations)
+                duration = min([duration, scene.audio.duration])
+
+            if built_scene:
+                scene.video_clip = (
+                    built_scene.resize(movie.final_size)
+                    .set_duration(duration)
+                    .set_audio(scene.audio)
+                    .set_fps(30)
+                )
 
     for movie in movies:
-        scene_clips = [scene.video_clip for scene in movie.scenes]
+        scene_clips = [scene.video_clip for scene in movie.scenes if scene.video_clip]
         if len(scene_clips) > 0:
             final_movie = concatenate_videoclips(scene_clips)
             movie_threads.append(
