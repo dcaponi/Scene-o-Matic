@@ -91,6 +91,54 @@
         ]
     },
     {
+        "title": "multi scene",
+        "final_size": [1080, 1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [1080, 1500],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when the pipeline works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            },
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/office.jpg",
+                        "size": [1080, 1920]
+                    },
+                    {
+                        "asset": "./assets/videos/stare.mp4",
+                        "size": [1080, 1100],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "when it dont works",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "title": "side by side same clip",
         "final_size": [1080, 1920],
         "scenes": [

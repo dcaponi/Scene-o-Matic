@@ -1,43 +1,52 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-import json
+
 import os
-import queue
 import sys
+import json
+import queue
 import threading
-from typing import List, Optional
-from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip, VideoClip
-from moviepy.video.fx.all import resize
-from moviepy.video.tools.subtitles import SubtitlesClip
+
 from termcolor import colored
-from generative.generative_asset import generative_tts, generative_video
+from typing import List, Optional
+from dataclasses import dataclass, field
+
+from moviepy.video.tools.subtitles import SubtitlesClip
+from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip, VideoClip
+
 from formats.utils.edit_utils import create_caption
+from generative.generative_asset import generative_tts, generative_video
 
 @dataclass
 class Clip:
     asset: str
-    override_audio: Optional[Clip] = None
-    video: VideoFileClip = None
-    audio: AudioFileClip = None
-    subtitle: SubtitlesClip = None
-    has_greenscreen: bool = False
-    has_background: bool = True
     prompt: str = None
     script: str = None
     voice: str = None
     duration: int = None
+    has_greenscreen: bool = False
+    has_background: bool = True
+    override_audio: Optional[Clip] = None
+    video: VideoFileClip = None
+    audio: AudioFileClip = None
+    subtitle: SubtitlesClip = None
     size: Optional[tuple[int, int]] = None
     location: tuple[int, int] = field(default_factory = lambda:(0, 0))
     anchor: tuple[str, str] = field(default_factory = lambda:("top", "left"))
+
+
+
 
 
 @dataclass
 class Scene:
     clips: List[Clip]
     video_clip: VideoClip = None
-    arrangement: str = "vertical"
     audio: AudioFileClip = None
+    arrangement: str = "vertical"
     use_audio: List[int] = field(default_factory=lambda: [0])
+
+
+
 
 
 @dataclass
@@ -49,6 +58,9 @@ class Movie:
     final_size: tuple[int, int] = field(default_factory=lambda: (1080, 1920))
     duration: int = 0
     staging_dir: str = None
+
+
+
 
 
 def movies_from_json(filepath, projects_folder):
@@ -67,15 +79,18 @@ def movies_from_json(filepath, projects_folder):
                 thread.join()
             while not movie_jobs.empty():
                 movies.append(movie_jobs.get())
-                
             return movies
-
+        
     except FileNotFoundError:
         print(colored(f"Error: File {filepath} not found", "red"))
         sys.exit(1)
     except json.JSONDecodeError:
         print(colored(f"Error File {filepath} does not contain valid json", "red"))
         sys.exit(1)
+
+
+
+
 
 def unpack_movie(movie_data, projects_folder, result_queue):
     movie = Movie(**movie_data)
@@ -97,11 +112,13 @@ def unpack_movie(movie_data, projects_folder, result_queue):
         scene = Scene(**scene_data)
 
         clips = []
+        
         for clip_data in scene_data.get("clips", []):
             clip = Clip(**clip_data)
 
             if clip.override_audio:
                 print(colored(f"[{movie.title}]: detected audio override for", "blue"))
+
                 audio_override = Clip(**clip.override_audio)
 
                 if audio_override.asset.endswith(('mp3', 'wav', 'ogg')):
@@ -132,6 +149,7 @@ def unpack_movie(movie_data, projects_folder, result_queue):
 
             else:
                 print(colored(f"[{movie.title}]: detected generative asset...", "blue"))
+
                 if clip.asset.endswith(('xi_labs', 'tiktok', 'whisper')): 
                     print(colored(f"[{movie.title}]: generating audio from tts...", "blue"))
                     clip.audio = generative_tts(movie.staging_dir, clip)
@@ -156,10 +174,12 @@ def unpack_movie(movie_data, projects_folder, result_queue):
                         pos=clip.anchor,
                         has_bg=clip.has_background,
                     )
+
                 print(colored(f"[{movie.title}]: finished generating assets!", "green"))
 
             if clip.video is not None and clip.size is not None:
                 clip.video = clip.video.resize(clip.size)
+
             clips.append(clip)
 
         scene.clips = clips
