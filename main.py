@@ -4,12 +4,7 @@ from moviepy.editor import *
 from termcolor import colored
 
 from formats.utils.model import movies_from_json
-from formats.utils.scene_builder import (
-    make_stacked_scene,
-    make_montage_scene,
-    make_vertical_arranged_scene,
-    make_horizontal_arranged_scene,
-)
+from formats.utils.scene_builder import arrange_clips
 
 from subtitle.subtitle import create_subtitles
 
@@ -67,26 +62,9 @@ if __name__ == "__main__":
                 if clip.subtitle is not None:
                     clip.video = CompositeVideoClip([clip.video, clip.subtitle])
 
-            if scene.arrangement == "stack":
-                built_scene = make_stacked_scene(scene.clips)
-            elif scene.arrangement == "vertical":
-                built_scene = make_vertical_arranged_scene(scene.clips)
-                if movie.final_size is not None:
-                    built_scene = built_scene.resize(movie.final_size)
-                else:
-                    built_scene = built_scene.resize((1080, 1920))
-            elif scene.arrangement == "horizontal":
-                built_scene = make_horizontal_arranged_scene(scene.clips)
-                if movie.final_size is not None:
-                    built_scene.resize(movie.final_size)
-                else:
-                    built_scene = built_scene.resize((1920, 1080))
-            elif scene.arrangement == "pip":
-                pass
-            elif scene.arrangement == "montage":
-                built_scene = make_montage_scene(scene.clips)
-            else:
-                print(colored("unrecognized scene arrangement", "red"))
+            built_scene = arrange_clips(scene.clips, scene.arrangement)
+
+            if built_scene == None:
                 continue
 
             clip_durations = [

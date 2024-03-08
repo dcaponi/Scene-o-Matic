@@ -39,6 +39,34 @@
                 ]
             }
         ]
+    },
+    {
+        "title": "side by side same clip",
+        "final_size": [1920, 1080],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1920, 1080]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [960, 540],
+                        "has_greenscreen": true,
+                        "anchor": ["left", "bottom"]
+                    },
+                    {
+                        "asset": "./assets/videos/toothless.mp4",
+                        "size": [960, 540],
+                        "has_greenscreen": true,
+                        "anchor": ["right", "bottom"]
+                    }
+                ]
+            }
+        ]
     }
 ]
 
