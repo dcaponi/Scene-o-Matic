@@ -82,8 +82,8 @@ if __name__ == "__main__":
             if built_scene:
                 scene.video_clip = (
                     built_scene.resize(movie.final_size)
-                    .set_duration(duration)
                     .set_audio(scene.audio)
+                    .set_duration(duration)
                     .set_fps(30)
                 )
 

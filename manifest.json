@@ -1,93 +1,7 @@
 [
-        {
-        "title": "audio_only",
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
-                        "voice": "en_us_006"
-                    }
-                ]
-            }
-        ]
-    },
     {
-        "title": "narrated with generated script and caption",
-        "final_size": [1080, 1920],
-        "has_subtitles": true,
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "orange cat kitty cat.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
-                            "voice": "en_us_006"
-                        }
-                    },
-                    {
-                        "asset": "orange cat story time",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "narrated with pre-made script",
-        "final_size": [1080, 1920],
-        "has_subtitles": true,
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [0],
-                "clips": [
-                    {
-                        "asset": "office pizza rainforrest friends clouds jungle.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
-                            "asset": ".tiktok",
-                            "script": "./assets/scripts/meeting.txt",
-                            "voice": "en_male_funny"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "vertically arranged clips",
-        "scenes": [
-            {
-                "arrangement": "vertical",
-                "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/videos/cat-drama.mp4",
-                        "size": [1080, 640]
-                    },
-                    {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [1080, 640]
-                    },
-                    {
-                        "asset": "./assets/videos/stare.mp4",
-                        "size": [1080, 640]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "multi scene",
-        "final_size": [1080, 1920],
+        "title": "vincent",
+        "final_size": [1080,1920],
         "scenes": [
             {
                 "arrangement": "stack",
@@ -95,37 +9,47 @@
                 "clips": [
                     {
                         "asset": "./assets/background/code.jpg",
-                        "size": [1080, 1920]
+                        "size": [1080,1920]
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [1080, 1500],
+                        "asset": "./assets/music/elevator.mp3",
+                        "duration": 7
+                    },
+                    {
+                        "asset": "./assets/videos/vincent.mp4",
+                        "size": [1080, 1000],
                         "has_greenscreen": true,
                         "anchor": ["center", "bottom"]
                     },
                     {
-                        "asset": "when the pipeline works",
+                        "asset": "looking for the api documentation but it keeps sending you to the marketing site",
                         "anchor": ["center", "top"],
                         "location": [0, 400]
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "title": "leetcode",
+        "final_size": [1080,1920],
+        "scenes": [
             {
                 "arrangement": "stack",
                 "use_audio": [1],
                 "clips": [
                     {
                         "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
+                        "size": [1080,1920]
                     },
                     {
-                        "asset": "./assets/videos/stare.mp4",
-                        "size": [1080, 1100],
+                        "asset": "./assets/videos/cat-zone.mp4",
+                        "size": [1080, 1500],
                         "has_greenscreen": true,
                         "anchor": ["center", "bottom"]
                     },
                     {
-                        "asset": "when it dont works",
+                        "asset": "My friend trying to explain a leetcode problem to me",
                         "anchor": ["center", "top"],
                         "location": [0, 400]
                     }
@@ -134,28 +58,81 @@
         ]
     },
     {
-        "title": "side by side same clip",
-        "final_size": [1920, 1080],
+        "title": "interview",
+        "final_size": [1080,1920],
         "scenes": [
             {
                 "arrangement": "stack",
                 "use_audio": [1],
                 "clips": [
                     {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1920, 1080]
+                        "asset": "./assets/background/whiteboard.jpg",
+                        "size": [1080,1920]
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
+                        "asset": "./assets/videos/sure-short.mp4",
+                        "size": [1080, 1400],
                         "has_greenscreen": true,
-                        "anchor": ["left", "bottom"]
+                        "anchor": ["center", "bottom"]
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
+                        "asset": "The interviewer when I say O(n) is the best run time complexity",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "pager",
+        "final_size": [1080,1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/bed.jpg",
+                        "size": [1080,1920]
+                    },
+                    {
+                        "asset": "./assets/videos/cat-snore.mp4",
+                        "size": [1080, 1400],
                         "has_greenscreen": true,
-                        "anchor": ["right", "bottom"]
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "virus",
+        "final_size": [1080,1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/oldpc.jpg",
+                        "size": [1080,1920]
+                    },
+                    {
+                        "asset": "./assets/videos/rogan-dance.mp4",
+                        "size": [1080, 1400],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "the rm -rf / command on the way to the family PC because I thought it would make games run faster",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
                     }
                 ]
             }
