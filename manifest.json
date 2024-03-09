@@ -90,11 +90,15 @@
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [1],
+                "use_audio": [1,2],
                 "clips": [
                     {
                         "asset": "./assets/background/bed.jpg",
                         "size": [1080,1920]
+                    },
+                    {
+                        "asset": "./assets/music/elevator.mp3",
+                        "duration": 7
                     },
                     {
                         "asset": "./assets/videos/cat-snore.mp4",

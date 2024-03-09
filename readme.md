@@ -133,6 +133,37 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
         ]
     },
     {
+        "title": "including audio track",
+        "final_size": [1080,1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1],
+                "clips": [
+                    {
+                        "asset": "./assets/background/code.jpg",
+                        "size": [1080,1920]
+                    },
+                    {
+                        "asset": "./assets/music/elevator.mp3",
+                        "duration": 7
+                    },
+                    {
+                        "asset": "./assets/videos/vincent.mp4",
+                        "size": [1080, 1000],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "looking for the api documentation but it keeps sending you to the marketing site",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "title": "narrated with generated script and caption",
         "final_size": [1080, 1920],
         "has_subtitles": true,
