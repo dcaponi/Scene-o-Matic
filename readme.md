@@ -164,6 +164,37 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
         ]
     },
     {
+        "title": "adding 'background music'",
+        "final_size": [1080,1920],
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [1,2],
+                "clips": [
+                    {
+                        "asset": "./assets/background/bed.jpg",
+                        "size": [1080,1920]
+                    },
+                    {
+                        "asset": "./assets/music/elevator.mp3",
+                        "duration": 7
+                    },
+                    {
+                        "asset": "./assets/videos/cat-snore.mp4",
+                        "size": [1080, 1400],
+                        "has_greenscreen": true,
+                        "anchor": ["center", "bottom"]
+                    },
+                    {
+                        "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "title": "narrated with generated script and caption",
         "final_size": [1080, 1920],
         "has_subtitles": true,
