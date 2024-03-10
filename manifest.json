@@ -7,7 +7,7 @@
             {
                 "arrangement": "stack",
                 "use_audio": [0],
-                "clips": [
+                "snippets": [
                     {
                         "asset": "./assets/background/videos/sat-odd.mp4",
                         "size": [1080, 1920],
@@ -33,7 +33,7 @@
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
+                "snippets": [
                     {
                         "asset": "./assets/background/code.jpg",
                         "size": [1080,1920]
@@ -64,7 +64,7 @@
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
+                "snippets": [
                     {
                         "asset": "./assets/background/office.jpg",
                         "size": [1080,1920]
@@ -91,7 +91,7 @@
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
+                "snippets": [
                     {
                         "asset": "./assets/background/whiteboard.jpg",
                         "size": [1080,1920]
@@ -118,7 +118,7 @@
             {
                 "arrangement": "stack",
                 "use_audio": [1,2],
-                "clips": [
+                "snippets": [
                     {
                         "asset": "./assets/background/bed.jpg",
                         "size": [1080,1920]
@@ -149,7 +149,7 @@
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
+                "snippets": [
                     {
                         "asset": "./assets/background/oldpc.jpg",
                         "size": [1080,1920]

@@ -16,8 +16,10 @@ from moviepy.editor import CompositeAudioClip, AudioFileClip, VideoFileClip, Vid
 from formats.utils.edit_utils import create_caption
 from generative.generative_asset import generative_tts, generative_video
 
+
+
 @dataclass
-class Clip:
+class Snippet:
     asset: str
     prompt: str = None
     script: str = None
@@ -25,7 +27,7 @@ class Clip:
     duration: int = None
     has_greenscreen: bool = False
     has_background: bool = True
-    override_audio: Optional[Clip] = None
+    override_audio: Optional[Snippet] = None
     video: VideoFileClip = None
     audio: AudioFileClip = None
     subtitle: SubtitlesClip = None
@@ -36,7 +38,7 @@ class Clip:
 
 @dataclass
 class Scene:
-    clips: List[Clip]
+    snippets: List[Snippet]
     video_clip: VideoClip = None
     audio: AudioFileClip = None
     arrangement: str = "vertical"
@@ -99,55 +101,55 @@ def unpack_movie(movie_data, projects_folder, result_queue):
     for scene_data in movie_data.get("scenes", []):
         scene = Scene(**scene_data)
 
-        clips = []
+        snippets = []
 
-        for clip_data in scene_data.get("clips", []):
-            clip = Clip(**clip_data)
+        for snippet_data in scene_data.get("snippets", []):
+            snippet = Snippet(**snippet_data)
 
-            if clip.override_audio:
+            if snippet.override_audio:
                 print(colored(f"[{movie.title}]: detected audio override for", "blue"))
 
-                audio_override = Clip(**clip.override_audio)
+                audio_override = Snippet(**snippet.override_audio)
 
                 if audio_override.asset.endswith(('mp3', 'wav', 'ogg')):
                     print(colored(f"[{movie.title}]: assigning audio...", "blue"))
-                    clip.audio = AudioFileClip(audio_override.asset)
+                    snippet.audio = AudioFileClip(audio_override.asset)
 
                 if audio_override.asset.endswith(("xi_labs", "tiktok", "whisper")):
                     print(colored(f"[{movie.title}]: creating audio from tts for...", "blue"))
-                    clip.audio = generative_tts(movie.staging_dir, audio_override)
+                    snippet.audio = generative_tts(movie.staging_dir, audio_override)
 
                 print(colored(f"[{movie.title}]: overide audio complete!", "green"))
 
-            if os.path.exists(clip.asset):
+            if os.path.exists(snippet.asset):
                 print(colored(f"[{movie.title}]: creating moviepy objects...", "blue"))
 
-                if clip.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
-                    clip.video = VideoFileClip(clip.asset).set_duration(clip.duration)
+                if snippet.asset.endswith(('jpg', 'jpeg', 'png', 'gif')):
+                    snippet.video = VideoFileClip(snippet.asset).set_duration(snippet.duration)
 
-                elif clip.asset.endswith(('mp3', 'wav', 'ogg')):
-                    clip.audio = AudioFileClip(clip.asset)
+                elif snippet.asset.endswith(('mp3', 'wav', 'ogg')):
+                    snippet.audio = AudioFileClip(snippet.asset)
 
-                elif clip.asset.endswith(('mp4', 'avi', 'mkv')):
-                    clip.video = VideoFileClip(clip.asset)
-                    if clip.audio is None:
-                        clip.audio = clip.video.audio
+                elif snippet.asset.endswith(('mp4', 'avi', 'mkv')):
+                    snippet.video = VideoFileClip(snippet.asset)
+                    if snippet.audio is None:
+                        snippet.audio = snippet.video.audio
 
                 print(colored(f"[{movie.title}]: Finished assigning assets!", "green"))
 
             else:
                 print(colored(f"[{movie.title}]: detected generative asset...", "blue"))
 
-                if clip.asset.endswith(('xi_labs', 'tiktok', 'whisper')): 
+                if snippet.asset.endswith(('xi_labs', 'tiktok', 'whisper')): 
                     print(colored(f"[{movie.title}]: generating audio from tts...", "blue"))
-                    clip.audio = generative_tts(movie.staging_dir, clip)
-                elif clip.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
+                    snippet.audio = generative_tts(movie.staging_dir, snippet)
+                elif snippet.asset.endswith(('d-id')): # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
                     # clip.video = did_character(clip.script, clip.host_img) (maybe host_img could also end in .sd or .mj and it would make you a host)
                     pass
-                elif clip.asset.endswith(('sora', 'rand')): 
+                elif snippet.asset.endswith(('sora', 'rand')): 
                     print(colored(f"[{movie.title}]: generating video from prompt...", "blue"))
-                    clip.video = generative_video(movie.staging_dir, clip)
-                elif clip.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
+                    snippet.video = generative_video(movie.staging_dir, snippet)
+                elif snippet.asset.endswith(('mj', 'sd', 'dall-e')): # asset-name.dall-e -> go make an image using a prompt
                     # clip.video = midjourney(prompt)
                     pass
 
@@ -156,41 +158,41 @@ def unpack_movie(movie_data, projects_folder, result_queue):
                 # Now it'll return a weird video with no background and a messed up looking caption which is obvious something is off
                 # but it may be better to do a good ol' fashioned clip.type check... so much for being clever :)
                 else:
-                    if clip.asset.endswith(('mp3', 'wav', 'ogg', 'mp4', 'avi', 'mkv')):
-                        print(colored(f"[{movie.title}]: looks like a file asset {clip.asset} was specified but doesn't exist", "yellow"))
+                    if snippet.asset.endswith(('mp3', 'wav', 'ogg', 'mp4', 'avi', 'mkv')):
+                        print(colored(f"[{movie.title}]: looks like a file asset {snippet.asset} was specified but doesn't exist", "yellow"))
                         print(colored(f"[{movie.title}]: If this was meant to be a file, check the path and try again, otherwise, assumes asset is a TextClip", "yellow"))
 
                     print(colored(f"[{movie.title}]: generating caption...", "blue"))
-                    clip.video = create_caption(
-                        text=clip.asset,
+                    snippet.video = create_caption(
+                        text=snippet.asset,
                         font="Courier-New-Bold",
                         fontsize=70,
                         color="white",
-                        size=clip.size,
-                        pos=clip.anchor,
-                        has_bg=clip.has_background,
+                        size=snippet.size,
+                        pos=snippet.anchor,
+                        has_bg=snippet.has_background,
                     )
 
                 print(colored(f"[{movie.title}]: finished generating assets!", "green"))
 
-            if clip.video is not None and clip.size is not None:
-                clip.video = clip.video.resize(clip.size)
+            if snippet.video is not None and snippet.size is not None:
+                snippet.video = snippet.video.resize(snippet.size)
 
-            if clip.video.duration is None:
-                if clip.audio is not None and clip.audio.duration is not None and clip.audio.duration > 0:
-                    clip.video.duration = clip.audio.duration
-                elif clip.duration is not None and clip.duration > 0:
-                    clip.video.duration = clip.duration
+            if snippet.video and snippet.video.duration is None:
+                if snippet.audio is not None and snippet.audio.duration is not None and snippet.audio.duration > 0:
+                    snippet.video.duration = snippet.audio.duration
+                elif snippet.duration is not None and snippet.duration > 0:
+                    snippet.video.duration = snippet.duration
 
-                if clip.video.duration is None and clip.asset.endswith(('mp3', 'wav', 'ogg', 'mp4', 'avi', 'mkv')):
+                if snippet.video.duration is None and snippet.asset.endswith(('mp3', 'wav', 'ogg', 'mp4', 'avi', 'mkv')):
                     print(colored(f"[{movie.title}]: clip duration could not be determined from video or audio source", "red"))
                     print(colored(f"[{movie.title}]: clip duration must be specified explicitly", "red"))
                     continue
 
-            clips.append(clip)
+            snippets.append(snippet)
 
-        scene.clips = clips
-        scene.audio = CompositeAudioClip([scene.clips[x].audio for x in scene.use_audio])
+        scene.snippets = snippets
+        scene.audio = CompositeAudioClip([scene.snippets[x].audio for x in scene.use_audio])
         scenes.append(scene)
 
     print(colored(f"[{movie.title}]: finished unpacking movie!", "green"))
