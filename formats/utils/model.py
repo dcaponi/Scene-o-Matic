@@ -34,9 +34,6 @@ class Clip:
     anchor: tuple[str, str] = field(default_factory = lambda:("left", "top"))
 
 
-
-
-
 @dataclass
 class Scene:
     clips: List[Clip]
@@ -44,9 +41,6 @@ class Scene:
     audio: AudioFileClip = None
     arrangement: str = "vertical"
     use_audio: List[int] = field(default_factory=lambda: [0])
-
-
-
 
 
 @dataclass
@@ -58,9 +52,6 @@ class Movie:
     final_size: tuple[int, int] = field(default_factory=lambda: (1080, 1920))
     duration: int = 0
     staging_dir: str = None
-
-
-
 
 
 def movies_from_json(filepath, projects_folder):
@@ -89,9 +80,6 @@ def movies_from_json(filepath, projects_folder):
         sys.exit(1)
 
 
-
-
-
 def unpack_movie(movie_data, projects_folder, result_queue):
     movie = Movie(**movie_data)
     movie.staging_dir = f"./{projects_folder}/{movie_data.get('title')}"
@@ -112,7 +100,7 @@ def unpack_movie(movie_data, projects_folder, result_queue):
         scene = Scene(**scene_data)
 
         clips = []
-        
+
         for clip_data in scene_data.get("clips", []):
             clip = Clip(**clip_data)
 
@@ -163,7 +151,15 @@ def unpack_movie(movie_data, projects_folder, result_queue):
                     # clip.video = midjourney(prompt)
                     pass
 
+                # This assumption isnt great as it falls apart if someone needs a caption ending with a file extension for some reason
+                # more importantly it falls over if an asset isnt found and we shouldn't assume its part of the caption
+                # Now it'll return a weird video with no background and a messed up looking caption which is obvious something is off
+                # but it may be better to do a good ol' fashioned clip.type check... so much for being clever :)
                 else:
+                    if clip.asset.endswith(('mp3', 'wav', 'ogg', 'mp4', 'avi', 'mkv')):
+                        print(colored(f"[{movie.title}]: looks like a file asset {clip.asset} was specified but doesn't exist", "yellow"))
+                        print(colored(f"[{movie.title}]: If this was meant to be a file, check the path and try again, otherwise, assumes asset is a TextClip", "yellow"))
+
                     print(colored(f"[{movie.title}]: generating caption...", "blue"))
                     clip.video = create_caption(
                         text=clip.asset,
@@ -179,6 +175,17 @@ def unpack_movie(movie_data, projects_folder, result_queue):
 
             if clip.video is not None and clip.size is not None:
                 clip.video = clip.video.resize(clip.size)
+
+            if clip.video.duration is None:
+                if clip.audio is not None and clip.audio.duration is not None and clip.audio.duration > 0:
+                    clip.video.duration = clip.audio.duration
+                elif clip.duration is not None and clip.duration > 0:
+                    clip.video.duration = clip.duration
+
+                if clip.video.duration is None and clip.asset.endswith(('mp3', 'wav', 'ogg', 'mp4', 'avi', 'mkv')):
+                    print(colored(f"[{movie.title}]: clip duration could not be determined from video or audio source", "red"))
+                    print(colored(f"[{movie.title}]: clip duration must be specified explicitly", "red"))
+                    continue
 
             clips.append(clip)
 

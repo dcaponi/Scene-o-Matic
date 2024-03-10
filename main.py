@@ -70,9 +70,16 @@ if __name__ == "__main__":
             clip_durations = [
                 c.video.duration
                 for c in scene.clips
-                if c.video is not None
-                and c.video.duration is not None
-                and c.video.duration > 0
+                if (
+                    c.video is not None
+                    and c.video.duration is not None
+                    and c.video.duration > 0
+                )
+                or (
+                    c.audio is not None
+                    and c.audio.duration is not None
+                    and c.audio.duration > 0
+                )
             ]
 
             if len(clip_durations) > 0:

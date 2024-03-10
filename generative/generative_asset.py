@@ -49,6 +49,7 @@ def generative_tts(staging_dir, clip):
     cc = concatenate_audioclips(audio_clips)
     cc.write_audiofile(tts_path)
 
+    # Write the audio file so we can retry later steps in the pipeline without re-generating the TTS which may cost money
     return AudioFileClip(tts_path)
 
 

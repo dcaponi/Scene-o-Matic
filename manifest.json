@@ -1,5 +1,32 @@
 [
     {
+        "title": "narrated with generated script and caption",
+        "final_size": [1080, 1920],
+        "has_subtitles": true,
+        "scenes": [
+            {
+                "arrangement": "stack",
+                "use_audio": [0],
+                "clips": [
+                    {
+                        "asset": "./assets/background/videos/sat-odd.mp4",
+                        "size": [1080, 1920],
+                        "override_audio": {
+                            "asset": ".tiktok",
+                            "script": "there once was a ship who put to sea, the name of the ship was a bully of tea. the winds blew up her bow dipped down and below my bully boys blow. soon may the wellerman come to bring us sugar and tea and rum. one day when the towing is done we'll release our hooks and go.", 
+                            "voice": "en_female_emotional"
+                        }
+                    },
+                    {
+                        "asset": "orange cat story time",
+                        "anchor": ["center", "top"],
+                        "location": [0, 400]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "title": "vincent",
         "final_size": [1080,1920],
         "scenes": [
