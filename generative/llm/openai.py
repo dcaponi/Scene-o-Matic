@@ -50,11 +50,16 @@ def generate_script(video_subject: str, duration_seconds: int):
 
     ONLY RETURN THE RAW SCRIPT. DO NOT RETURN ANYTHING ELSE.
     """
-    response = openai_client.chat.completions.create(
-        model="gpt-4", temperature=0.9, messages=[{"role": "system", "content": prompt}]
-    )
-    sentences = response.choices[0].message.content
-    return _ensure_array(sentences)
+
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4", temperature=0.9, messages=[{"role": "system", "content": prompt}]
+        )
+        sentences = response.choices[0].message.content
+        return _ensure_array(sentences)
+    except Exception as e:
+        print(colored(f"Openai Failure: {e}", "red"))
+        return []
 
 def _ensure_array(gpt_response):
     try:
