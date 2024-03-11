@@ -3,7 +3,7 @@ import threading
 from moviepy.editor import *
 from termcolor import colored
 
-from formats.utils.model import movies_from_json
+from model.model import movies_from_json
 from formats.utils.scene_builder import arrange_snippets
 
 from subtitle.subtitle import create_subtitles
@@ -50,61 +50,14 @@ if __name__ == "__main__":
     movie_threads = []
 
     movies = movies_from_json("./manifest.json", PRODUCTS_DIR)
-    for movie in movies:
+    
+    movie_threads = [
+        threading.Thread(
+            target=write,
+            args=(movie.video_clip, movie.staging_dir, movie.title, movie.has_subtitles, 8, ),
+        ) 
+    for movie in movies if movie.video_clip]
 
-        for i, scene in enumerate(movie.scenes):
-            if os.path.exists(f"{movie.staging_dir}{i}.mp4"):
-                print(colored(f"scene {movie.staging_dir}{i}.mp4 exists...", "blue"))
-                print(colored(f"To recreate, delete {movie.staging_dir}{i}.mp4 and try again", "blue"))
-                continue
-
-            for snippet in scene.snippets:
-                if snippet.subtitle is not None:
-                    snippet.video = CompositeVideoClip([snippet.video, snippet.subtitle])
-
-            built_scene = arrange_snippets(scene.snippets, scene.arrangement)
-
-            if built_scene == None:
-                continue
-
-            snippet_durations = [
-                snippet.video.duration
-                for snippet in scene.snippets
-                if (
-                    snippet.video is not None
-                    and snippet.video.duration is not None
-                    and snippet.video.duration > 0
-                )
-                or (
-                    snippet.video is not None
-                    and snippet.audio is not None
-                    and snippet.audio.duration is not None
-                    and snippet.audio.duration > 0
-                )
-            ]
-
-            if len(snippet_durations) > 0:
-                duration = min(snippet_durations)
-                duration = min([duration, scene.audio.duration])
-
-            if built_scene:
-                scene.video_clip = (
-                    built_scene.resize(movie.final_size)
-                    .set_audio(scene.audio)
-                    .set_duration(duration)
-                    .set_fps(30)
-                )
-
-    for movie in movies:
-        scene_snippets = [scene.video_clip for scene in movie.scenes if scene.video_clip]
-        if len(scene_snippets) > 0:
-            final_movie = concatenate_videoclips(scene_snippets)
-            movie_threads.append(
-                threading.Thread(
-                    target=write,
-                    args=(final_movie, movie.staging_dir, movie.title, movie.has_subtitles, 8, ),
-                )
-            )
 
     for thread in movie_threads:
         thread.start()

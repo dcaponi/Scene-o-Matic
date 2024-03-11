@@ -9,18 +9,22 @@
                 "use_audio": [0],
                 "snippets": [
                     {
-                        "asset": "./assets/background/videos/sat-odd.mp4",
-                        "size": [1080, 1920],
-                        "override_audio": {
+                        "video": {
+                            "asset": "./assets/background/videos/sat-odd.mp4",
+                            "size": [1080, 1920]
+                        },
+                        "audio": {
                             "asset": ".tiktok",
                             "script": "there once was a ship who put to sea, the name of the ship was a bully of tea. the winds blew up her bow dipped down and below my bully boys blow. soon may the wellerman come to bring us sugar and tea and rum. one day when the towing is done we'll release our hooks and go.", 
                             "voice": "en_female_emotional"
                         }
                     },
                     {
-                        "asset": "orange cat story time",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "asset": "orange cat story time",
+                            "anchor": ["center", "top"],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             }
@@ -35,135 +39,60 @@
                 "use_audio": [1],
                 "snippets": [
                     {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1080,1920]
+                        "video": {
+                            "asset": "./assets/background/code.jpg",
+                            "size": [1080,1920]
+                        }
                     },
                     {
-                        "asset": "./assets/music/elevator.mp3",
-                        "duration": 7
+                        "video": {
+                            "asset": "./assets/videos/vincent.mp4",
+                            "size": [1080, 1000],
+                            "has_greenscreen": true,
+                            "anchor": ["center", "bottom"]
+                        },
+                        "audio": {
+                            "asset": "./assets/music/elevator.mp3"
+                        } 
                     },
                     {
-                        "asset": "./assets/videos/vincent.mp4",
-                        "size": [1080, 1000],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "looking for the api documentation but it keeps sending you to the marketing site",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "has_background": true,
+                            "asset": "looking for the api documentation but it keeps sending you to the marketing site",
+                            "anchor": ["center", "top"],
+                            "size": [800, 0],
+                            "location": [0, 400]
+                        }
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "title": "leetcode",
-        "final_size": [1080,1920],
-        "scenes": [
+            },
             {
                 "arrangement": "stack",
                 "use_audio": [1],
                 "snippets": [
                     {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080,1920]
+                        "video": {
+                            "asset": "./assets/background/whiteboard.jpg",
+                            "size": [1080,1920]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/cat-zone.mp4",
-                        "size": [1080, 1500],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
+                        "video": {
+                            "asset": "./assets/videos/stare.mp4",
+                            "size": [1080, 1000],
+                            "has_greenscreen": true,
+                            "anchor": ["center", "bottom"],
+                            "duration": 7
+                        }
                     },
                     {
-                        "asset": "My friend trying to explain a leetcode problem to me",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "interview",
-        "final_size": [1080,1920],
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "snippets": [
-                    {
-                        "asset": "./assets/background/whiteboard.jpg",
-                        "size": [1080,1920]
-                    },
-                    {
-                        "asset": "./assets/videos/sure-short.mp4",
-                        "size": [1080, 1400],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "The interviewer when I say O(n) is the best run time complexity",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "pager",
-        "final_size": [1080,1920],
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [1,2],
-                "snippets": [
-                    {
-                        "asset": "./assets/background/bed.jpg",
-                        "size": [1080,1920]
-                    },
-                    {
-                        "asset": "./assets/music/elevator.mp3",
-                        "duration": 7
-                    },
-                    {
-                        "asset": "./assets/videos/cat-snore.mp4",
-                        "size": [1080, 1400],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "title": "virus",
-        "final_size": [1080,1920],
-        "scenes": [
-            {
-                "arrangement": "stack",
-                "use_audio": [1],
-                "snippets": [
-                    {
-                        "asset": "./assets/background/oldpc.jpg",
-                        "size": [1080,1920]
-                    },
-                    {
-                        "asset": "./assets/videos/rogan-dance.mp4",
-                        "size": [1080, 1400],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "the rm -rf / command on the way to the family PC because I thought it would make games run faster",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "has_background": true,
+                            "asset": "the SDR waiting for you to click on the CTA",
+                            "anchor": ["center", "top"],
+                            "size": [800, 0],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             }

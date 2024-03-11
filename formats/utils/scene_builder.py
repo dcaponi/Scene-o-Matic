@@ -1,7 +1,7 @@
 from moviepy.editor import concatenate_videoclips
 from termcolor import colored
-from formats.utils.edit_utils import remove_greenscreen, stack, h_arrange, v_arrange
-from formats.utils.model import Snippet
+from formats.utils.edit_utils import stack, h_arrange, v_arrange
+from model.snippet import Snippet
 from moviepy.editor import VideoClip
 
 def arrange_snippets(snippets: list[Snippet], arrangement: str):
@@ -19,17 +19,15 @@ def arrange_snippets(snippets: list[Snippet], arrangement: str):
     built_scene: VideoClip = None
     for snippet in snippets:
         if snippet.video:
-            if snippet.has_greenscreen:
-                snippet.video = remove_greenscreen(snippet.video)
             if built_scene == None:
-                built_scene = snippet.video
+                built_scene = snippet.video.clip
             else:
                 if arrangement == "stack":
                     built_scene = stack(
-                        snippet.video, 
+                        snippet.video.clip, 
                         built_scene, 
-                        snippet.location, 
-                        snippet.anchor, 
+                        snippet.video.location, 
+                        snippet.video.anchor, 
                         False
                     )
                 elif arrangement == "vertical":
@@ -44,4 +42,14 @@ def arrange_snippets(snippets: list[Snippet], arrangement: str):
                     print(colored("unrecognized scene arrangement", "red"))
                     return None
 
+    for snippet in snippets:
+        if snippet.caption:
+
+            built_scene = stack(
+                snippet.caption.clip, 
+                built_scene, 
+                snippet.caption.location, 
+                snippet.caption.anchor, 
+                False
+            )
     return built_scene

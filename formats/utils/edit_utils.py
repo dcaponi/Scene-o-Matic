@@ -83,7 +83,7 @@ def _position(clip, location=(0, 0), anchor=("left", "top"), border_thickness=0,
 
 
 
-def remove_greenscreen(clip):
+def remove_greenscreen(clip: VideoClip):
     """Removes the greenscreen on greenscreen videos"""
 
     return clip.fx(vfx.mask_color, color=[0, 255, 0], thr=120, s=7)
