@@ -1,11 +1,7 @@
-import os
 import threading
 from moviepy.editor import *
-from termcolor import colored
 
 from model.model import movies_from_json
-from formats.utils.scene_builder import arrange_snippets
-
 from subtitle.subtitle import create_subtitles
 
 PRODUCTS_DIR = "output"
@@ -30,7 +26,6 @@ def write(
     )
 
     if has_subtitles:
-        print(colored(f"creating subtitles...", "green"))
         subtitle_clip = create_subtitles(directory, f"{directory}/{filename}.mp4")
 
         subtitled_movie = CompositeVideoClip(

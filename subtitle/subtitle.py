@@ -43,6 +43,4 @@ def create_subtitles(output_path: str, movie_path: str):
 
     srt_equalizer.equalize_srt_file(out_file, out_file, 10)
 
-    print(colored("[+] Subtitles generated.", "green"))
-
     return SubtitlesClip(out_file, generator).set_pos(("center", "center")).set_fps(24)

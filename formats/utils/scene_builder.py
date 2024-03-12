@@ -40,7 +40,7 @@ def arrange_snippets(snippets: list[Snippet], arrangement: str):
                     pass
                 else:
                     print(colored("unrecognized scene arrangement", "red"))
-                    return None
+                    return built_scene
 
     for snippet in snippets:
         if snippet.caption:

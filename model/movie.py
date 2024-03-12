@@ -21,8 +21,6 @@ class Movie:
     def unpack(self, projects_folder):
         self.staging_dir = f"./{projects_folder}/{self.title}"
 
-        print(colored(f"[{self.title}]: unpacking...", "blue"))
-
         if os.path.exists(f"{self.staging_dir}/{self.title}.mp4"):
             print(colored(f"movie {self.title} exists. skipping...", "blue"))
             print(colored(f"to rebuild the movie, delete {self.staging_dir}/{self.title}.mp4 and try again","blue"))
@@ -40,7 +38,5 @@ class Movie:
         scenes_to_splice = [scene.video_clip.resize(self.final_size) for scene in self.scenes if scene.video_clip]
         if len(scenes_to_splice) > 0:
             self.video_clip = concatenate_videoclips(scenes_to_splice)
-
-        print(colored(f"[{self.title}]: finished unpacking movie!", "green"))
 
         return self
