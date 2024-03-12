@@ -116,25 +116,11 @@ class Snippet:
 
             if self.audio:
                 self.video.clip.set_audio(self.audio.clip)
+            else:
+                self.audio = AudioSpec(asset=self.video.asset, clip=self.video.clip.audio)
 
         if self.caption:
             self.caption = CaptionSpec(**self.caption).unpack()
 
-        if self.audio and self.audio.clip and self.video and self.video.clip:
-            self.video.clip.audio = self.audio.clip
-
-        if self.video and self.video.clip:
-            if (
-                self.audio
-                and self.audio.clip
-                and self.audio.clip.duration
-                and self.audio.clip.duration > 0
-            ):
-                self.video.clip.duration = min(self.video.clip.duration, self.audio.clip.duration)
-            elif self.video.duration is not None and self.video.duration > 0:
-                self.video.clip.duration = self.video.duration
-
-        if self.video and self.audio is None:
-            self.audio = AudioSpec(asset=self.video.asset, clip=self.video.clip.audio)
 
         return self

@@ -8,8 +8,8 @@
                 "snippets": [
                     {
                         "audio": {
-                            "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
-                            "voice": "echo"
+                            "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
+                            "voice": "en_us_002"
                         }
                     }
                 ]
@@ -22,16 +22,12 @@
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [0],
+                "use_audio": [1],
                 "snippets": [
                     {
                         "video": {
                             "asset": "./assets/background/code.jpg",
                             "size": [1080,1920]
-                        },
-                        "audio": {
-                            "asset": "./assets/music/elevator.mp3",
-                            "duration": 7
                         }
                     },
                     {
@@ -39,7 +35,11 @@
                             "asset": "./assets/videos/vincent.mp4",
                             "size": [1080, 1000],
                             "has_greenscreen": true,
-                            "anchor": ["center", "bottom"]
+                            "anchor": ["center", "bottom"],
+                            "duration": 10
+                        },
+                        "audio": {
+                            "asset": "./assets/music/elevator.mp3"
                         }
                     },
                     {
