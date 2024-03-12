@@ -20,10 +20,12 @@ class VideoSpec:
 
     def unpack(self, staging_dir):
         if self.asset.endswith(("jpg", "jpeg", "png", "gif")):
-            self.clip = VideoFileClip(self.asset).set_duration(0)
+            self.clip = VideoFileClip(self.asset).set_duration(self.duration if self.duration else 0)
 
         elif self.asset.endswith(("mp4", "avi", "mkv")):
             self.clip = VideoFileClip(self.asset)
+            if self.duration:
+                self.clip = self.clip.set_duration(self.duration)
 
         elif self.asset.endswith(("d-id")):
             # asset-name.d-id -> go make a .mp4 using a talking head like d-id from asset script
@@ -33,9 +35,7 @@ class VideoSpec:
         elif self.asset.endswith(("sora", "rand")):
             self.clip = generative_video(staging_dir, self)
 
-        elif self.asset.endswith(
-            ("mj", "sd", "dall-e")
-        ):  # asset-name.dall-e -> go make an image using a prompt
+        elif self.asset.endswith(("mj", "sd", "dall-e")):  # asset-name.dall-e -> go make an image using a prompt
             # clip.video = midjourney(prompt)
             pass
 
@@ -44,6 +44,8 @@ class VideoSpec:
 
         if self.has_greenscreen:
             self.clip = remove_greenscreen(self.clip)
+
+        self.duration = self.clip.duration
 
         return self
 
@@ -65,6 +67,8 @@ class AudioSpec:
 
         else:
             print(colored("no audio detected", "blue"))
+
+        self.duration = self.clip.duration
 
         return self
 
@@ -104,7 +108,14 @@ class Snippet:
             self.audio = AudioSpec(**self.audio).unpack(staging_dir)
 
         if self.video:
-            self.video = VideoSpec(**self.video).unpack(staging_dir)
+            self.video = VideoSpec(**self.video)
+            if self.video.duration is None and self.audio:
+                self.video.duration = self.audio.duration
+
+            self.video.unpack(staging_dir)
+
+            if self.audio:
+                self.video.clip.set_audio(self.audio.clip)
 
         if self.caption:
             self.caption = CaptionSpec(**self.caption).unpack()

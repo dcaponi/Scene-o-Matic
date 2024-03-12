@@ -30,7 +30,7 @@ def tts(
             if source == "whisper":
                 audio_data = openai_tts(req_text, text_speaker)
         else:
-            print(colored(f"voice not known to {source}", "red"))
+            print(colored(f"voice {text_speaker} not known to {source}", "red"))
             return None
     else: 
         print(colored(f"source {source} currently not supported", "red"))

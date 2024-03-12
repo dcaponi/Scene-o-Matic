@@ -54,7 +54,7 @@ if __name__ == "__main__":
     movie_threads = [
         threading.Thread(
             target=write,
-            args=(movie.video_clip, movie.staging_dir, movie.title, movie.has_subtitles, 8, ),
+            args=(movie.video_clip, movie.staging_dir, movie.title, movie.has_subtitles, 16, ),
         ) 
     for movie in movies if movie.video_clip]
 

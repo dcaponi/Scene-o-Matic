@@ -25,8 +25,6 @@ def get_video(search_term: str, size=(1080, 1920)):
         print(colored(response, "red"))
 
     for video in video_urls:
-        # Check if video has a download link
-        if ".com/external" in video["link"]:
-            video_url = video["link"]
+        video_url = video["link"]
 
     return video_url

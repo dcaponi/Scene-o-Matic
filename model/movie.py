@@ -34,9 +34,12 @@ class Movie:
         self.scenes = [Scene(**scene).unpack(self.staging_dir) for scene in self.scenes]
 
         for scene in self.scenes:
-            scene.video_clip = scene.video_clip.resize(self.final_size)
+            if scene.video_clip:
+                scene.video_clip = scene.video_clip.resize(self.final_size)
 
-        self.video_clip = concatenate_videoclips([scene.video_clip.resize(self.final_size) for scene in self.scenes if scene.video_clip])
+        scenes_to_splice = [scene.video_clip.resize(self.final_size) for scene in self.scenes if scene.video_clip]
+        if len(scenes_to_splice) > 0:
+            self.video_clip = concatenate_videoclips(scenes_to_splice)
 
         print(colored(f"[{self.title}]: finished unpacking movie!", "green"))
 

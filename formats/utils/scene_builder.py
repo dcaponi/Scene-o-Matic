@@ -31,10 +31,10 @@ def arrange_snippets(snippets: list[Snippet], arrangement: str):
                         False
                     )
                 elif arrangement == "vertical":
-                    built_scene = v_arrange(built_scene, snippet.video)
+                    built_scene = v_arrange(built_scene, snippet.video.clip)
                     built_scene = built_scene.resize((1080, 1920))
                 elif arrangement == "horizontal":
-                    built_scene = h_arrange(built_scene, snippet.video)
+                    built_scene = h_arrange(built_scene, snippet.video.clip)
                     built_scene = built_scene.resize((1920, 1080))
                 elif arrangement == "pip":
                     pass

@@ -18,8 +18,7 @@ class Scene:
 
     def unpack(self, staging_dir):
         self.snippets = [Snippet(**snippet).unpack(staging_dir) for snippet in self.snippets]
-        self.audio_clip = CompositeAudioClip([self.snippets[x].audio.clip for x in self.use_audio])
-
+        self.audio_clip = CompositeAudioClip([self.snippets[x].audio.clip for x in self.use_audio if self.snippets[x].audio])
         built_scene = arrange_snippets(self.snippets, self.arrangement)
 
         snippet_durations = [

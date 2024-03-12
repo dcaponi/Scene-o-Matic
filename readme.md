@@ -1,79 +1,125 @@
 # Movie-Matic
 The automatic movie assembler with generative AI tendencies.
 
-This project allows you to programmatically create and manage projects that consist of multiple movies. Each movie within a project can contain several scenes, and each scene can contain multiple clips. This documentation outlines how to structure your projects and movies to use with the API effectively.
+This project allows you to programmatically create and manage projects that consist of multiple movies. Each movie within a project can contain several scenes, and each scene can contain multiple snippets. This documentation outlines how to structure your projects and movies to use with the API effectively.
 
 ## Concepts
 ### Things
-1. `Movies` - the final output video is called a movie, it is composed of...
-2. `Scenes` - an arrangement of...
-   1. scenes are built by describing one of the following arrangements and telling the program which clip to take audio from. You could specify multiple audios but that would probably be annoying
-      1. stacking - placing a background then stacking some smaller clips or greenscreen clips on top of each other in layers
-      2. vertical/horizontal - to get a presenter type video or side by side type video
-      3. picture in picture - like the news or putting a streamer in the bottom corner
-      4. montage - plays a bunch of videos in a row
-3. `Clips` - image, audio, or video assets to add to a scene.
-   1. you tell each clip where in the video it lives in relation to the final size (left bottom for example) and some left/down offset for fine tuning. You'll also tell it if it has a greenscreen to mask away for stacking
-   2. You also tell each clip where to find the asset, or to create one using one of the machine learning extension
-      1. audio: `.tiktok` for tik tok tts or `.xi_labs` for elevenlabs or `.whisper` for openai whisper
-      2. video: `.sora` for openai sora or `.did` for d-id talking head type videos or `.rand` to have openai create some search terms based on a prompt and you'll get to choose from a selection of stock videos to merge into a background video.
-      3. image: `.sd` for stable diffusion `.de` for dall-e and `.mj` for midjourney
-   3. In vertical/horizontal scenes the clips are arranged in order from top down or left to right
+1. **Movies**: the final output video is called a movie, it is composed of...
+2. **Scenes**: an arrangement of...
+   - Scenes are built by describing one of the following arrangements and telling the program which snippet to take audio from. You could specify multiple audios but that would probably be annoying
+      - **stacking**: placing a background then stacking some smaller snippets or greenscreen snippets on top of each other in layers
+      - **vertical/horizontal**: to get a presenter type video or side by side type video
+      - **picture in picture**: like the news or putting a streamer in the bottom corner
+      - **montage**: plays a bunch of videos in a row
+3. **Snippets**: image, audio, or video assets to add to a scene.
+   - You tell each snippet where in the video it lives in relation to the final size (left bottom for example) and some left/down offset for fine-tuning. You'll also tell it if it has a greenscreen to mask away for stacking
+   - You also tell each snippet where to find the asset, or to create one using one of the machine learning extension
+      - **audio**: `.tiktok` for TikTok TTS or `.xi_labs` for ElevenLabs or `.whisper` for OpenAI Whisper
+      - **video**: `.sora` for OpenAI Sora or `.did` for D-ID talking head type videos or `.rand` to have OpenAI create some search terms based on a prompt and you'll get to choose from a selection of stock videos to merge into a background video.
+      - **image**: `.sd` for Stable Diffusion `.de` for DALL-E and `.mj` for Midjourney
+   - In vertical/horizontal scenes, the snippets are arranged in order from top down or left to right.
 
 ### Things Details
 #### Movie
-* `title (string)`: The title of the movie.
-* `scenes (array of Scene objects)`: A collection of scenes that make up the movie.
-* `has_subtitles (boolean, optional)`: Indicates whether the movie includes subtitles. Defaults to false if not specified.
-* `final_size (tuple of integers, optional)`: The final resolution of the movie, specified as [width, height]. If not provided, a default size may be applied.
-* `duration (integer, optional)`: The total duration of the movie in seconds. If not provided, it might be calculated based on the content.
+- **title (string)**: The title of the movie.
+- **scenes (array of Scene objects)**: A collection of scenes that make up the movie.
+- **has_subtitles (boolean, optional)**: Indicates whether the movie includes subtitles. Defaults to false if not specified.
+- **final_size (tuple of integers, optional)**: The final resolution of the movie, specified as [width, height]. If not provided, a default size may be applied.
+- **duration (integer, optional)**: The total duration of the movie in seconds. If not provided, it might be calculated based on the content.
 
 #### Scenes
-* `clips (array of Clip objects)`: A collection of clips that are part of the scene.
-* `arrangement (string)`: Defines how clips are arranged within the scene Must be one of
-  *  `"stack"` - places a background image or video then stacks additional clips or greenscreen clips on top of each other in layers toward the viewer
-  *  `"vertical"` - places clips starting at the top in a top-to-bottom arrangement
-  *  `"horizontal"` - places clips starting at the left in a left-to-right arrangement
-  *  `"montage"` - cuts one or more clips together to be played sequentially
-* `use_audio (array of integers)`: Specifies which clips' audio tracks should be used in the scene. The integers represent the index of the clips within the clips array.
+- **snippets (array of Snippet objects)**: A collection of snippets that are part of the scene.
+- **arrangement (string)**: Defines how snippets are arranged within the scene. Must be one of
+  - `"stack"`: places a background image or video then stacks additional snippets or greenscreen snippets on top of each other in layers toward the viewer
+  - `"vertical"`: places snippets starting at the top in a top-to-bottom arrangement
+  - `"horizontal"`: places snippets starting at the left in a left-to-right arrangement
+  - `"montage"`: cuts one or more snippets together to be played sequentially
+- **use_audio (array of integers)**: Specifies which snippets' audio tracks should be used in the scene. The integers represent the index of the snippets within the snippets array.
 
-#### Clips
-* `asset (string)`: The identifier or path to the media asset. 
-  * You can use one of the following generative extensions. Generative extensions are arranged as `some prompt for the ai.model`
-    *  __audio__: `.tiktok` for tik tok tts or `.xi_labs` for elevenlabs or `.whisper` for openai whisper
-       *  **[Coming Soon]**`.mu` for mubert AI generated music
-    *  __video__: `.rand` to have openai create some search terms based on a prompt. you'll get to choose from a selection of stock videos to merge into a video.
-       *  **[Coming Soon]**`.sora` for openai sora or `.did` for d-id talking head type video
-    *  __images__: **[Coming Soon]** image: `.sd` for stable diffusion `.dall-e` for dall-e and `.mj` for midjourney
-* `prompt (string, optional)`: A text prompt associated with the clip, if applicable.
-  * Used for generative type clips like generative tts prompts, video prompts etc
-* `script (string, optional)`: A script or text to be used with the clip, if applicable. Also accepts path to `.txt` file
-  * If going for a simple TTS without a generative script put your pre-written script here
-* `voice (string, optional)`: The voice identifier for text-to-speech synthesis, if applicable.
-  * See `voices.py` for a list of useable voices (or elevenlabs api for a list of those voices)
-* `duration (integer, optional)`: The duration of the clip in seconds.
-  * `Required` for *image clips* where there's no audio or other clip to determine how long a scene should be
-* `has_greenscreen (boolean, optional)`: Indicates if the clip features a green screen that should be keyed out.
-* `has_background (boolean, optional)`: Specifies if the clip includes a background.
-  * Used primarily for text clips to give a semi-transparent background to make text more readable
-* `override_audio (Clip object, optional)`: A clip that provides an audio override for the current clip.
-  * Clip audio can be overridden with an audio file or TTS reading prompt. This is used on narrated compilation type videos.
-* `size (tuple of integers, optional)`: The resolution of the clip, specified as `[width, height]`.
-  * In situations like `arrangement: "horizontal` some defaults are assigned so clips scale properly.
-* `location (tuple of integers)`: The on-screen location of the clip, specified as [left from start, down from start].
-  * This is relative to the `anchor` and describes how many pixels left and below the top left pixel of the clip
-* `anchor (tuple of strings)`: The anchor point for the clip's position, specified as [`("left" | "center" | "right")`, `("top" | "center" | "bottom")`]. Defaults `["left", "top"]`
+#### Snippets
+A `snippet` is a grouping of one of the following types: `audio` `video` or `caption`
+
+##### Audio only snippet
+```json
+{
+    "audio": {
+        "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
+        "voice": "echo"
+    }
+}
+```
+
+##### Audio and Video snippets. Overlay audio onto video's native audio
+```json
+{
+    "audio": {
+        "asset": "./assets/music/son_of_preacher_man.mp3"
+    }
+},
+{
+    "video": {
+        "asset": "./assets/videos/vincent.mp4",
+        "size": [1080, 1000],
+        "has_greenscreen": true,
+        "anchor": ["center", "bottom"]
+    }
+}
+```
+
+##### Audio and Video in same snippet (override existing video audio)
+```json
+{
+    "audio": {
+        "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
+        "voice": "echo"
+    },
+    "video": {
+        "asset": "./assets/videos/compilation.mp4",
+        "size": [1080, 1920]
+    }
+}
+```
+
+- **asset (string)**: The identifier or path to the media asset (e.g. `path/to/video.mp4`). You can use one of the following generative extensions. Generative extensions are arranged as `some prompt for the ai.model`
+  - **audio**: `.tiktok` for TikTok TTS or `.xi_labs` for ElevenLabs or `.whisper` for OpenAI Whisper
+     - **[Coming Soon]** `.mu` for Mubert AI-generated music
+  - **video**: `.rand` to have OpenAI create some search terms based on a prompt. you'll get to choose from a selection of stock videos to merge into a video.
+     - **[Coming Soon]** `.sora` for OpenAI Sora or `.did` for D-ID talking head type video
+  - **images**: **[Coming Soon]** image: `.sd` for Stable Diffusion `.dall-e` for DALL-E and `.mj` for Midjourney
+  - A note on generative extensions. If you choose a generative extension for video, `audio` or a `duration` must be provided so the generated video duration can be known. If you choose generative audio and video, audio will be generated first and that duration will be used. 
+- **prompt (string, optional)**: A text prompt associated with the snippet, if applicable.
+  - Used for generative type snippets like generative TTS prompts, video prompts etc
+- **script (string, optional)**: A script or text to be used with the snippet, if applicable. Also accepts the path to `.txt` file
+  - If going for a simple TTS without a generative script put your pre-written script here
+- **voice (string, optional)**: The voice identifier for text-to-speech synthesis, if applicable.
+  - See `voices.py` for a list of useable voices (or ElevenLabs API for a list of those voices)
+- **duration (integer, optional)**: The duration of the snippet in seconds.
+  - `Required` for *image snippets* where there's no audio or other snippet to determine how long a scene should be
+  - Duration cannot exceed provided asset's duration. If you specify a 10s duration on a 5s video the video will halt after 5s
+- **has_greenscreen (boolean, optional)**: Indicates if the snippet features a green screen that should be keyed out.
+- **has_background (boolean, optional)**: Specifies if the snippet includes a background.
+  - Used primarily for text snippets to give a semi-transparent background to make text more readable
+- **size (tuple of integers, optional)**: The resolution of the snippet, specified as `[width, height]`.
+  - In situations like `arrangement: "horizontal` some defaults are assigned so snippets scale properly.
+- **location (tuple of integers)**: The on-screen location of the snippet, specified as [left from start, down from start].
+  - This is relative to the `anchor` and describes how many pixels left and below the top-left pixel of the snippet
+- **anchor (tuple of strings)**: The anchor point for the snippet's position, specified as [`("left" | "center" | "right")`, `("top" | "center" | "bottom")`]. Defaults `["left", "top"]`
+
 
 ### Caveats and Limitations
-1. **[Coming Soon]** Theres no background music setting
+1. Theres no background music volume setting
 2. Theres no scene transition, its just a jump cut
-3. The types of videos this can make are very limited as custom animation or motions just don't exist right now.
+3. The types of videos this can make are very limited as custom animation or motions just don't exist right now
+4. No Brady Bunch or PIP arrangement (PIP is on the way) or side by side arrangements of stacked scenes (but you can make this by combinining 2 or 3 runs of simpler videos)
+   1. Actually for brady bunch, you'd do one run of 3 movies vertically or horizontally arranged w/ 3 snippets and do a second run simply doing whatever the opposite arrangement was (so if you made 3 horizontally arranged 3 snippet movies, just vertically arrange them in a final movie)
+      1. 2 runs of the tool because you need to write the first 3 movies to disk before proceeding. The design philosophy here is simplicity, flexibility, and extendability and making every type of video arrangement would be a Herculean effort which is why we only provide simple formats that can be combined to more complex videos.
 
 ### Recommended Video Types
 1. explainer with a talking head presenter
 2. narrated/musical montages
 3. masked foreground on background (memes, presenters, etc)
-4. *[Coming soon]* picture in picture (news casts, react videos, explainers)
+4. **[Coming Soon]** picture in picture (news casts, react videos, explainers)
 
 ## Up & Running
 ### Virtual Environments
@@ -117,16 +163,18 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
 ## Examples
 ```json
 [
-        {
+    {
         "title": "audio_only",
         "scenes": [
             {
                 "arrangement": "stack",
                 "use_audio": [0],
-                "clips": [
+                "snippets": [
                     {
-                        "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
-                        "voice": "echo"
+                        "audio": {
+                            "asset": "write a funny script about kitty cats doing orange cat activities.whisper",
+                            "voice": "echo"
+                        }
                     }
                 ]
             }
@@ -138,26 +186,32 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [1],
-                "clips": [
+                "use_audio": [0],
+                "snippets": [
                     {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1080,1920]
+                        "video": {
+                            "asset": "./assets/background/code.jpg",
+                            "size": [1080,1920]
+                        },
+                        "audio": {
+                            "asset": "./assets/music/elevator.mp3",
+                            "duration": 7
+                        }
                     },
                     {
-                        "asset": "./assets/music/elevator.mp3",
-                        "duration": 7
+                        "video": {
+                            "asset": "./assets/videos/vincent.mp4",
+                            "size": [1080, 1000],
+                            "has_greenscreen": true,
+                            "anchor": ["center", "bottom"]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/vincent.mp4",
-                        "size": [1080, 1000],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "looking for the api documentation but it keeps sending you to the marketing site",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "asset": "looking for the api documentation but it keeps sending you to the marketing site",
+                            "anchor": ["center", "top"],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             }
@@ -169,26 +223,31 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [1,2],
-                "clips": [
+                "use_audio": [0,1],
+                "snippets": [
                     {
-                        "asset": "./assets/background/bed.jpg",
-                        "size": [1080,1920]
+                        "video": {
+                            "asset": "./assets/background/bed.jpg",
+                            "size": [1080,1920]
+                        },
+                        "audio": {
+                            "asset": "./assets/music/elevator.mp3"
+                        }
                     },
                     {
-                        "asset": "./assets/music/elevator.mp3",
-                        "duration": 7
+                        "video": {
+                            "asset": "./assets/videos/cat-snore.mp4",
+                            "size": [1080, 1400],
+                            "has_greenscreen": true,
+                            "anchor": ["center", "bottom"]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/cat-snore.mp4",
-                        "size": [1080, 1400],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
+                            "anchor": ["center", "top"],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             }
@@ -202,19 +261,23 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
             {
                 "arrangement": "stack",
                 "use_audio": [0],
-                "clips": [
+                "snippets": [
                     {
-                        "asset": "orange cat kitty cat.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
+                        "video": {
+                            "asset": "orange cat kitty cat.rand",
+                            "size": [1080, 1920]
+                        },
+                        "audio": {
                             "asset": "write a funny script about kitty cats doing orange cat activities.tiktok",
-                            "voice": "en_us_004"
+                            "voice": "en_us_006"
                         }
                     },
                     {
-                        "asset": "orange cat story time",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "asset": "orange cat story time",
+                            "anchor": ["center", "top"],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             }
@@ -228,11 +291,13 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
             {
                 "arrangement": "stack",
                 "use_audio": [0],
-                "clips": [
+                "snippets": [
                     {
-                        "asset": "office pizza rainforrest friends clouds jungle.rand",
-                        "size": [1080, 1920],
-                        "override_audio": {
+                        "video": {
+                            "asset": "office pizza rainforrest friends clouds jungle.rand",
+                            "size": [1080, 1920]
+                        },
+                        "audio": {
                             "asset": ".tiktok",
                             "script": "./assets/scripts/meeting.txt",
                             "voice": "en_male_funny"
@@ -243,20 +308,33 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
         ]
     },
     {
-        "title": "vertically arranged clips",
+        "title": "vertically arranged snippets",
         "scenes": [
             {
                 "arrangement": "vertical",
                 "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/videos/cat-drama.mp4",
+                "snippets": [
+                    {   
+                        "video": {
+                            "asset": "./assets/videos/cat-drama.mp4",
+                            "size": [1080, 640]
+                        }
                     },
-                    {
-                        "asset": "./assets/videos/toothless.mp4",
+                    {   
+                        "video": {
+                            "asset": "./assets/videos/toothless.mp4",
+                            "size": [1080, 640]
+                        },
+                        "audio": {
+                            "asset": "./assets/music/elevator.mp3",
+                            "duration": 7
+                        }
                     },
-                    {
-                        "asset": "./assets/videos/stare.mp4",
+                    {   
+                        "video": {
+                            "asset": "./assets/videos/stare.mp4",
+                            "size": [1080, 640]
+                        }
                     }
                 ]
             }
@@ -269,70 +347,90 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1080, 1920]
+                "snippets": [
+                    {   
+                        "video": {
+                            "asset": "./assets/background/code.jpg",
+                            "size": [1080, 1920]
+                        }
+                    },
+                    {   
+                        "video": {
+                            "asset": "./assets/videos/toothless.mp4",
+                            "duration": 7,
+                            "size": [1080, 1500],
+                            "has_greenscreen": true,
+                            "anchor": ["center", "bottom"]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [1080, 1500],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
-                    },
-                    {
-                        "asset": "when the pipeline works",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "asset": "when the pipeline works",
+                            "anchor": ["center", "top"],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             },
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/office.jpg",
-                        "size": [1080, 1920]
+                "snippets": [
+                    {   
+                        "video": {
+                            "asset": "./assets/background/office.jpg",
+                            "size": [1080, 1920]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/stare.mp4",
-                        "size": [1080, 1100],
-                        "has_greenscreen": true,
-                        "anchor": ["center", "bottom"]
+                        "video": {
+                            "asset": "./assets/videos/stare.mp4",
+                            "duration": 7,
+                            "size": [1080, 1100],
+                            "has_greenscreen": true,
+                            "anchor": ["center", "bottom"]
+                        }
                     },
                     {
-                        "asset": "when it dont works",
-                        "anchor": ["center", "top"],
-                        "location": [0, 400]
+                        "caption": {
+                            "asset": "when it dont works",
+                            "anchor": ["center", "top"],
+                            "location": [0, 400]
+                        }
                     }
                 ]
             }
         ]
     },
     {
-        "title": "side by side same clip",
+        "title": "side by side same snippet",
         "final_size": [1920, 1080],
         "scenes": [
             {
                 "arrangement": "stack",
                 "use_audio": [1],
-                "clips": [
-                    {
-                        "asset": "./assets/background/code.jpg",
-                        "size": [1920, 1080]
+                "snippets": [
+                    {   
+                        "video": {
+                            "asset": "./assets/background/code.jpg",
+                            "size": [1920, 1080]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
-                        "has_greenscreen": true,
-                        "anchor": ["left", "bottom"]
+                        "video": {
+                            "asset": "./assets/videos/toothless.mp4",
+                            "size": [960, 540],
+                            "has_greenscreen": true,
+                            "anchor": ["left", "bottom"]
+                        }
                     },
                     {
-                        "asset": "./assets/videos/toothless.mp4",
-                        "size": [960, 540],
-                        "has_greenscreen": true,
-                        "anchor": ["right", "bottom"]
+                        "video": {
+                            "asset": "./assets/videos/toothless.mp4",
+                            "size": [960, 540],
+                            "has_greenscreen": true,
+                            "anchor": ["right", "bottom"]
+                        }
                     }
                 ]
             }
@@ -340,6 +438,3 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
     }
 ]
 ```
-
-## Weird stuff
-`override_audio` is used instead of simply specifying the audio clip and then choosing it with `use_audio` because some generative clips need to be told how long they are. Typically they're just going ot be as long as the AI generated script or sound bite. Therefore, providing an override is helpful here so that the generated clip can be told how long it should be during generation, instead of a user having to figure that out a priori. This also removes the need to assume audio clips will always be created first and remove any ambiguity in the event that multiple audios are to be used in the video (e.g. AI script narration with background music)

@@ -1,14 +1,16 @@
 import os
 import re
-from moviepy.editor import concatenate_audioclips, AudioFileClip
+from moviepy.editor import concatenate_audioclips, AudioFileClip, CompositeAudioClip
 from termcolor import colored
 from generative.video.compilation.create_compilation import create_compilation
 from generative.llm.openai import generate_script
 from generative.tts.tts import tts
 
 def generative_video(staging_dir, snippet):
-    duration = snippet.duration if snippet.duration else snippet.audio.duration
-    if duration == None:
+    duration = 0
+    if snippet.duration:
+        duration = snippet.duration
+    else:
         print(colored("For generative videos specify a duration or provide an audio override for the snippet to match duration on", "red"))
         return None
 
