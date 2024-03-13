@@ -2,6 +2,7 @@ from typing import List
 from dataclasses import dataclass, field
 
 from moviepy.editor import VideoClip, AudioClip, CompositeAudioClip
+from termcolor import colored
 
 from formats.utils.scene_builder import arrange_snippets
 
@@ -18,7 +19,16 @@ class Scene:
 
     def unpack(self, staging_dir):
         self.snippets = [Snippet(**snippet).unpack(staging_dir) for snippet in self.snippets]
-        self.audio_clip = CompositeAudioClip([self.snippets[x].audio.clip for x in self.use_audio if self.snippets[x].audio])
+
+        audio_clips = []
+        for x in self.use_audio:
+            if self.snippets[x].audio.clip:
+                audio_clips.append(self.snippets[x].audio.clip)
+        if len(audio_clips) > 0:
+            self.audio_clip = CompositeAudioClip(audio_clips)
+        else:
+            print(colored("no audio selected or selected snippets have no audio", "light_yellow"))
+
         built_scene = arrange_snippets(self.snippets, self.arrangement)
 
         snippet_durations = [

@@ -5,7 +5,7 @@
         "scenes": [
             {
                 "arrangement": "stack",
-                "use_audio": [1],
+                "use_audio": [2],
                 "snippets": [
                     {
                         "video": {
