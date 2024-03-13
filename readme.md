@@ -147,6 +147,7 @@ OPENAI_API_KEY=
 ASSEMBLY_AI_API_KEY=
 PEXELS_API_KEY=
 ELEVEN_API_KEY=
+GIPHY_API_KEY=
 ```
 
 OpenAI - generating scripts or using their TTS `whisper`
