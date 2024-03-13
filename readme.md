@@ -16,8 +16,8 @@ This project allows you to programmatically create and manage projects that cons
    - You tell each snippet where in the video it lives in relation to the final size (left bottom for example) and some left/down offset for fine-tuning. You'll also tell it if it has a greenscreen to mask away for stacking
    - You also tell each snippet where to find the asset, or to create one using one of the machine learning extension
       - **audio**: `.tiktok` for TikTok TTS or `.xi_labs` for ElevenLabs or `.whisper` for OpenAI Whisper
-      - **video**: `.sora` for OpenAI Sora or `.did` for D-ID talking head type videos or `.rand` to have OpenAI create some search terms based on a prompt and you'll get to choose from a selection of stock videos to merge into a background video.
-      - **image**: `.sd` for Stable Diffusion `.de` for DALL-E and `.mj` for Midjourney
+      - **video**: **[Coming Soon]** `.sora` for OpenAI Sora or `.did` for D-ID talking head type videos or `.rand` to have OpenAI create some search terms based on a prompt and you'll get to choose from a selection of stock videos to merge into a background video.
+      - **image**: `.giphy` for selected Giphy gifs, **[Coming Soon]** `.sd` for Stable Diffusion `.de` for DALL-E and `.mj` for Midjourney
    - In vertical/horizontal scenes, the snippets are arranged in order from top down or left to right.
 
 ### Things Details
