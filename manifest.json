@@ -81,7 +81,13 @@
                         "caption": {
                             "asset": "looking for the api documentation but it keeps sending you to the marketing site",
                             "anchor": ["center", "top"],
-                            "location": [0, 400]
+                            "location": [0, 400],
+                            "size": [900, 0],
+                            "font": "./fonts/montserrat_bold.ttf",
+                            "color": "white",
+                            "has_background": true,
+                            "align": "center",
+                            "fontsize": 50
                         }
                     }
                 ]
@@ -117,7 +123,14 @@
                         "caption": {
                             "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
                             "anchor": ["center", "top"],
-                            "location": [0, 400]
+                            "location": [0, 400],
+                            "size": [900, 0],
+                            "font": "./fonts/montserrat_bold.ttf",
+                            "color": "white",
+                            "has_background": true,
+                            "align": "center",
+                            "fontsize": 50,
+                            "stroke_width": 5
                         }
                     }
                 ]

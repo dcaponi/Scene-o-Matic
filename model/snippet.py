@@ -9,13 +9,17 @@ from generative.generative_asset import generative_image, generative_tts, genera
 
 
 @dataclass
-class VideoSpec:
+class Locatable:
     asset: str
-    has_greenscreen: bool = False
-    duration: int = None
     size: Optional[tuple[int, int]] = None
     location: tuple[int, int] = field(default_factory=lambda: (0, 0))
     anchor: tuple[str, str] = field(default_factory=lambda: ("left", "top"))
+
+
+@dataclass
+class VideoSpec(Locatable):
+    has_greenscreen: bool = False
+    duration: int = None
     clip: VideoFileClip = None
 
     def unpack(self, staging_dir):
@@ -73,21 +77,26 @@ class AudioSpec:
 
 
 @dataclass
-class CaptionSpec:
-    asset: str
+class CaptionSpec(Locatable):
+    font: str = "Helvetica"
+    fontsize: int = 70
+    color: str = "white"
+    align: str = "center"
+    method: str = "caption"
+    stroke_width: int = 3
     has_background: bool = True
-    size: Optional[tuple[int, int]] = None
-    location: tuple[int, int] = field(default_factory=lambda: (0, 0))
-    anchor: tuple[str, str] = field(default_factory=lambda: ("left", "top"))
     clip: VideoClip = None
 
     def unpack(self):
         self.clip = create_caption(
             text=self.asset,
-            font="Courier-New-Bold",
-            fontsize=70,
-            color="white",
+            font=self.font,
+            fontsize=self.fontsize,
+            color=self.color,
             size=self.size,
+            method=self.method,
+            align=self.align,
+            stroke_width=self.stroke_width,
             pos=self.anchor,
             has_bg=self.has_background,
         )

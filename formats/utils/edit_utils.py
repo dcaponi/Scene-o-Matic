@@ -7,15 +7,16 @@ V_SIZE = (1080, 1920)
 H_SIZE = (1920, 1080)
 
 
-def create_caption(text, font, fontsize, color, size, pos=("center", 300), has_bg=False):
+def create_caption(text, font, fontsize, color, size, method, align, stroke_width, pos=("center", 300), has_bg=False):
     """Creates a caption clip for writing text on a video"""
     overlay = TextClip(
         text,
         font=font,
         fontsize=fontsize,
         color=color,
-        stroke_width=4,
-        method="caption",
+        stroke_width=stroke_width,
+        method=method,
+        align=align,
         size=size if size is not None else (0.9 * 1080, 0),
     )
     if has_bg:
@@ -31,9 +32,6 @@ def create_caption(text, font, fontsize, color, size, pos=("center", 300), has_b
         return CompositeVideoClip([color_clip, overlay]).set_pos(pos)
 
     return overlay.set_pos(pos)
-
-
-
 
 
 def _normalize_durations(clip_a, clip_b, minimize=True, min_duration=10):
@@ -58,9 +56,6 @@ def _normalize_durations(clip_a, clip_b, minimize=True, min_duration=10):
     return (clip_a.subclip(0, duration), clip_b.subclip(0, duration))
 
 
-
-
-
 def _position(clip, location=(0, 0), anchor=("left", "top"), border_thickness=0, border_color=(255, 255, 255)):
     """
     Positions a clip by anchoring it relative to the final movie 
@@ -80,16 +75,10 @@ def _position(clip, location=(0, 0), anchor=("left", "top"), border_thickness=0,
     )
 
 
-
-
-
 def remove_greenscreen(clip: VideoClip):
     """Removes the greenscreen on greenscreen videos"""
 
     return clip.fx(vfx.mask_color, color=[0, 255, 0], thr=120, s=7)
-
-
-
 
 
 def remove_bottom_third(clip, width=1080):
@@ -101,9 +90,6 @@ def remove_bottom_third(clip, width=1080):
         x2=clip.size[0], 
         y2=int(clip.size[1] * 2 / 3)
     ).resize((width, clip.size[1]))
-
-
-
 
 
 def stack(fg_clip, bg_clip, location=(0, 0), anchor=("left", "top"), minimize=True):
@@ -119,9 +105,6 @@ def stack(fg_clip, bg_clip, location=(0, 0), anchor=("left", "top"), minimize=Tr
     return CompositeVideoClip([bg, fg])
 
 
-
-
-
 def v_arrange(top_clip, bottom_clip, minimize=True, min_duration=10):
     """
     Arranges clips top and bottom and sets duration to the shorter clip
@@ -133,9 +116,6 @@ def v_arrange(top_clip, bottom_clip, minimize=True, min_duration=10):
     return clips_array([[top_clip], [bottom_clip]]).resize(V_SIZE)
 
 
-
-
-
 def h_arrange(left_clip, right_clip, minimize=True, min_duration=10):
     """
     Arranges clips side by side and sets duration to the shorter clip
@@ -145,9 +125,6 @@ def h_arrange(left_clip, right_clip, minimize=True, min_duration=10):
 
     left_clip, right_clip = _normalize_durations(left_clip, right_clip, minimize, min_duration)
     return clips_array([[left_clip, right_clip]]).resize(H_SIZE)
-
-
-
 
 
 def image_montage(image_clips, duration, fade_duration=0, img_size=(1920, 1080)):
@@ -168,9 +145,6 @@ def image_montage(image_clips, duration, fade_duration=0, img_size=(1920, 1080))
     return concatenate_videoclips(clips)
 
 
-
-
-
 def pip_arrange(pip_clip, clip, pip_location=(0, 0), pip_anchor=("left", "top"), minimize=True, border_thickness=0, border_color=(255, 255, 255)):
     """
     Places a picture in picture clip somewhere in a larger clip using the _position function. 
@@ -180,4 +154,3 @@ def pip_arrange(pip_clip, clip, pip_location=(0, 0), pip_anchor=("left", "top"),
     pc = _position(pip, pip_location, pip_anchor, border_thickness, border_color)
 
     return CompositeVideoClip([clip, pc])
-
