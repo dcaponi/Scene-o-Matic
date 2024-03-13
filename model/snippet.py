@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip, VideoClip, AudioFileClip
 from termcolor import colored
 
 from formats.utils.edit_utils import create_caption, remove_greenscreen
-from generative.generative_asset import generative_tts, generative_video
+from generative.generative_asset import generative_image, generative_tts, generative_video
 
 
 @dataclass
@@ -35,9 +35,8 @@ class VideoSpec:
         elif self.asset.endswith(("sora", "rand")):
             self.clip = generative_video(staging_dir, self)
 
-        elif self.asset.endswith(("mj", "sd", "dall-e")):  # asset-name.dall-e -> go make an image using a prompt
-            # clip.video = midjourney(prompt)
-            pass
+        elif self.asset.endswith(("mj", "sd", "dall-e", "giphy")):
+            self.clip = generative_image(staging_dir, self)
 
         if self.clip is not None and self.size is not None:
             self.clip = self.clip.resize(self.size)

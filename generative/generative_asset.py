@@ -1,8 +1,9 @@
 import os
 import re
-from moviepy.editor import concatenate_audioclips, AudioFileClip, CompositeAudioClip
+from moviepy.editor import concatenate_audioclips, AudioFileClip
 from termcolor import colored
 from generative.video.compilation.create_compilation import create_compilation
+from generative.image.giphy import giphy_snippet
 from generative.llm.openai import generate_script
 from generative.tts.tts import tts
 
@@ -21,6 +22,12 @@ def generative_video(staging_dir, snippet):
         pass
     if src.lower() == "d-id":
         pass
+
+def generative_image(staging_dir, snippet):
+    prompt, src = snippet.asset.split(".")
+    if src.lower() == 'giphy':
+        return giphy_snippet(staging_dir, prompt, snippet.size)
+
 
 def generative_tts(staging_dir, snippet):
     tts_path = f"{staging_dir}/tts/tts.mp3"

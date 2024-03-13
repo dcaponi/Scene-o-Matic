@@ -30,6 +30,32 @@ def video_search_terms_array(prompt: str, amount=1):
     terms = response.choices[0].message.content
     return _ensure_array(terms)
 
+
+def giphy_search_terms(search_prompt: str, amount=1):
+    prompt = f"""
+    Generate {amount} search terms for gifs or stickers for the given prompt.
+    Prompt: {search_prompt}
+
+    The search terms must be returned as a string with each term separated by a '+'
+    The search terms string must be shorter than 40 characters. Limit the search terms string to 40 characters.
+
+    Here is an example of a search terms response:
+    funny cats+opossums+raccoons+fun toys
+
+    ONLY RETURN THE STRING.
+    DO NOT RETURN ANYTHING ELSE.
+    """
+
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4", temperature=0.4, messages=[{"role": "system", "content": prompt}]
+        )
+        terms = response.choices[0].message.content
+        return terms[:50]
+    except:
+        return "+".join([w for w in search_prompt.split(" ") if len(w) > 1])[:50]
+
+
 def generate_script(video_subject: str, duration_seconds: int):
     prompt = f"""
     Generate a script for a video, depending on the subject of the video.
