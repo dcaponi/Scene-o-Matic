@@ -81,31 +81,44 @@ A `snippet` is a grouping of one of the following types: `audio` `video` or `cap
 }
 ```
 
-- **asset (string)**: The identifier or path to the media asset (e.g. `path/to/video.mp4`). You can use one of the following generative extensions. Generative extensions are arranged as `some prompt for the ai.model`
-  - **audio**: `.tiktok` for TikTok TTS or `.xi_labs` for ElevenLabs or `.whisper` for OpenAI Whisper
-     - **[Coming Soon]** `.mu` for Mubert AI-generated music
-  - **video**: `.rand` to have OpenAI create some search terms based on a prompt. you'll get to choose from a selection of stock videos to merge into a video.
-     - **[Coming Soon]** `.sora` for OpenAI Sora or `.did` for D-ID talking head type video
-  - **images**: **[Coming Soon]** image: `.sd` for Stable Diffusion `.dall-e` for DALL-E and `.mj` for Midjourney
-  - A note on generative extensions. If you choose a generative extension for video, `audio` or a `duration` must be provided so the generated video duration can be known. If you choose generative audio and video, audio will be generated first and that duration will be used. 
-- **prompt (string, optional)**: A text prompt associated with the snippet, if applicable.
-  - Used for generative type snippets like generative TTS prompts, video prompts etc
-- **script (string, optional)**: A script or text to be used with the snippet, if applicable. Also accepts the path to `.txt` file
-  - If going for a simple TTS without a generative script put your pre-written script here
-- **voice (string, optional)**: The voice identifier for text-to-speech synthesis, if applicable.
-  - See `voices.py` for a list of useable voices (or ElevenLabs API for a list of those voices)
-- **duration (integer, optional)**: The duration of the snippet in seconds.
-  - `Required` for *image snippets* where there's no audio or other snippet to determine how long a scene should be
-  - Duration cannot exceed provided asset's duration. If you specify a 10s duration on a 5s video the video will halt after 5s
-- **has_greenscreen (boolean, optional)**: Indicates if the snippet features a green screen that should be keyed out.
-- **has_background (boolean, optional)**: Specifies if the snippet includes a background.
-  - Used primarily for text snippets to give a semi-transparent background to make text more readable
-- **size (tuple of integers, optional)**: The resolution of the snippet, specified as `[width, height]`.
-  - In situations like `arrangement: "horizontal` some defaults are assigned so snippets scale properly.
-- **location (tuple of integers)**: The on-screen location of the snippet, specified as [left from start, down from start].
-  - This is relative to the `anchor` and describes how many pixels left and below the top-left pixel of the snippet
-- **anchor (tuple of strings)**: The anchor point for the snippet's position, specified as [`("left" | "center" | "right")`, `("top" | "center" | "bottom")`]. Defaults `["left", "top"]`
+- **video**: 
+  - **asset (string)**: The identifier or path to the media asset (e.g. `path/to/video.mp4`). You can use one of the following generative extensions. Generative extensions are arranged as `some prompt for the ai.model`
+    - **[Coming Soon]** `.sora` for OpenAI Sora or `.did` for D-ID talking head type video.
+  - **duration (integer, optional)**: The duration of the snippet in seconds.
+    - `Required` for *image snippets* where there's no audio or other snippet to determine how long a scene should be
+    - Duration cannot exceed provided asset's duration. If you specify a 10s duration on a 5s video the video will halt after 5s
+  - **has_greenscreen (boolean, optional)**: Indicates if the snippet features a green screen that should be keyed out.
+  - **size (tuple of integers, optional)**: The resolution of the snippet, specified as `[width, height]`.
+    - In situations like `arrangement: "horizontal` some defaults are assigned so snippets scale properly.
+  - **location (tuple of integers)**: The on-screen location of the snippet, specified as [left from start, down from start].
+    - This is relative to the `anchor` and describes how many pixels left and below the top-left pixel of the snippet
+  - **anchor (tuple of strings)**: The anchor point for the snippet's position, specified as [`("left" | "center" | "right")`, `("top" | "center" | "bottom")`]. Defaults `["left", "top"]`
 
+- **audio**:
+  - **asset (string)**: The identifier or path to the media asset (e.g. `path/to/audio.mp3`). You can use one of the following generative extensions. Generative extensions are arranged as `some prompt for the ai.model`
+    - **audio**: `.tiktok` for TikTok TTS or `.xi_labs` for ElevenLabs or `.whisper` for OpenAI Whisper
+      - **[Coming Soon]** `.mu` for Mubert AI-generated music
+    - **script (string, optional)**: A script or text to be used with the snippet, if applicable. Also accepts the path to `.txt` file. If going for a simple TTS without a generative script put your pre-written script here
+    - **voice (string, optional)**: The voice identifier for text-to-speech synthesis, if applicable.
+      - See `voices.py` for a list of useable voices (or ElevenLabs API for a list of those voices)
+      - **duration (integer, optional)**: The duration of the snippet in seconds.
+        - Duration cannot exceed provided asset's duration. If you specify a 10s duration on a 5s video the video will halt after 5s
+- **caption**:
+  - **asset (string)**: The text to display in the caption
+  - **has_background (boolean, optional)**: Specifies if the snippet includes a background.
+    - Used to give a semi-transparent background to make text more readable
+  -  **size (tuple of integers, optional)**: The resolution of the snippet, specified as `[width, height]`.
+     - In situations like `arrangement: "horizontal` some defaults are assigned so snippets scale properly.
+  - **location (tuple of integers)**: The on-screen location of the snippet, specified as [left from start, down from start].
+    - This is relative to the `anchor` and describes how many pixels left and below the top-left pixel of the snippet
+  - **anchor (tuple of strings)**: The anchor point for the snippet's position, specified as [`("left" | "center" | "right")`, `("top" | "center" | "bottom")`]. Defaults `["left", "top"]`
+  - **font (string optional)**: Path to font file or one of MoviePy's default fonts
+  - **color (string optional default white)**: text color
+  - **has_background (boolean optional default false)**: determines whether to assign translucent background to text to make it more visible without a full background
+  - **method (string optional default caption)**: See MoviePy TextClip documentation
+  - **align (string optional default center)**: Text Alignment (See MoviePy TextClip documentation)
+  - **fontsize (integer optional default 70)**: Font size
+  - **stroke_width (integer optional default 3)**: Stroke width
 
 ### Caveats and Limitations
 1. Theres no background music volume setting
@@ -153,7 +166,8 @@ GIPHY_API_KEY=
 OpenAI - generating scripts or using their TTS `whisper`
 AssemblyAI - transcribing spoken word in a video and creating subtitle .srt files
 Pexels - getting compilations of stock videos to use in a background
-Elevenlabs - Better TTS than TikTok
+Elevenlabs - better TTS than TikTok
+Giphy - source for gifs and stickers
 
 ### Running
 right now its just keyed to read a `manifest.json` file. You can use the json below to make your own and see it in action.
@@ -247,7 +261,13 @@ run your handy `python main.py` from the `/app` directory (this one) and video g
                         "caption": {
                             "asset": "sleepping through a pager dookie because I'm dropping my notice tomorrow",
                             "anchor": ["center", "top"],
-                            "location": [0, 400]
+                            "location": [0, 400],
+                            "font": "./fonts/montserrat_bold.ttf",
+                            "color": "white",
+                            "has_background": true,
+                            "align": "center",
+                            "fontsize": 50,
+                            "stroke_width": 5
                         }
                     }
                 ]
