@@ -12,7 +12,7 @@ def generative_video(staging_dir, snippet):
     if snippet.duration:
         duration = snippet.duration
     else:
-        print(colored("For generative videos specify a duration or provide an audio override for the snippet to match duration on", "red"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: For generative videos specify a duration or provide an audio override for the snippet to match duration on", "red"))
         return None
 
     prompt, src = snippet.asset.split(".")
@@ -33,8 +33,8 @@ def generative_tts(staging_dir, snippet):
     tts_path = f"{staging_dir}/tts/tts.mp3"
 
     if os.path.exists(tts_path):
-        print(colored("tts reading exists. skipping...", "blue"))
-        print(colored(f"to change script, delete {tts_path} and try again", "blue"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: tts reading exists. skipping...", "blue"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: to change script, delete {tts_path} and try again", "blue"))
         return AudioFileClip(tts_path)
 
     if not os.path.exists(f"{staging_dir}/tts"):
@@ -48,7 +48,7 @@ def generative_tts(staging_dir, snippet):
         else:
             script = _split_string_on_punctuation(snippet.script)
     else:
-        print(colored("generating script...", "blue"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: generating script...", "blue"))
         script = generate_script(prompt, snippet.duration)
 
     audio_clips = []

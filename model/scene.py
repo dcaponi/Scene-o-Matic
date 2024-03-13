@@ -27,7 +27,7 @@ class Scene:
         if len(audio_clips) > 0:
             self.audio_clip = CompositeAudioClip(audio_clips)
         else:
-            print(colored("no audio selected or selected snippets have no audio", "light_yellow"))
+            print(colored(f"[{staging_dir.split('/')[-1]}]: no audio selected or selected snippets have no audio", "light_yellow"))
 
         built_scene = arrange_snippets(self.snippets, self.arrangement)
 
@@ -48,8 +48,12 @@ class Scene:
             )
         ]
 
+        duration = 0
+
         if len(snippet_durations) > 0:
             duration = min(snippet_durations)
+
+        if self.audio_clip:
             duration = min([duration, self.audio_clip.duration])
 
         if built_scene:

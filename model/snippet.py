@@ -65,7 +65,7 @@ class AudioSpec:
             self.clip = generative_tts(staging_dir, self)
 
         else:
-            print(colored("no audio detected", "blue"))
+            print(colored(f"[{staging_dir.split('/')[-1]}]: no audio detected", "yellow"))
 
         self.duration = self.clip.duration
 

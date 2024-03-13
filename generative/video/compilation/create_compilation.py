@@ -8,14 +8,14 @@ from generative.llm.openai import video_search_terms_array
 from generative.video.compilation.stock_footage.pexels import get_video
 from moviepy.editor import *
 
-def create_compilation(project_dir: str, prompt: str, size=(1080, 1920), min_duration=60):
+def create_compilation(staging_dir: str, prompt: str, size=(1080, 1920), min_duration=60):
 
-    comp_source_videos = f"{project_dir}/compilation_sources"
+    comp_source_videos = f"{staging_dir}/compilation_sources"
     comp_staging_dir = f"{comp_source_videos}/compilation.mp4"
 
     if os.path.exists(comp_staging_dir):
-        print(colored("compiliation exists. skipping...", "blue"))
-        print(colored(f"to remake compilation, delete {comp_staging_dir} and try again.", "blue"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: compiliation exists. skipping...", "blue"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: to remake compilation, delete {comp_staging_dir} and try again.", "blue"))
         return VideoFileClip(comp_staging_dir)
 
     clips = []
@@ -24,9 +24,9 @@ def create_compilation(project_dir: str, prompt: str, size=(1080, 1920), min_dur
 
     while sum(clip.duration for clip in clips) < min_duration:
         get_batch_stock_footage(comp_source_videos, video_search_terms, size)
-        print(colored(f"The minimum duration is {min_duration} seconds.", "yellow"))
-        print(colored(f"You need {min_duration - sum(clip.duration for clip in clips)} seconds of footage", "yellow"))
-        input(colored(f"Remove or insert clips into {comp_source_videos} now. Press enter to continue...", "yellow"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: The minimum duration is {min_duration} seconds.", "yellow"))
+        print(colored(f"[{staging_dir.split('/')[-1]}]: You need {min_duration - sum(clip.duration for clip in clips)} seconds of footage", "yellow"))
+        input(colored(f"[{staging_dir.split('/')[-1]}]: Remove or insert clips into {comp_source_videos} now. Press enter to continue...", "yellow"))
         video_paths = [f"{vp}" for vp in glob.glob(f"{comp_source_videos}/*.mp4")]
         for video_path in video_paths:
             clip = VideoFileClip(video_path)
